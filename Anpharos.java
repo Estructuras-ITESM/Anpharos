@@ -8,6 +8,8 @@ public class Anpharos extends JFrame implements ActionListener{
   private JButton forward, backward, rotate, move, draw, dontdraw, hidesphero, resetpshero, run, save, load;
   private GridBagConstraints c = new GridBagConstraints();
   private JTextArea code = new JTextArea(10,10);
+  Sphero sphero = new Sphero(0, 100, 100, "");
+  Queue<Command> qCommands = new Queue();
 
   public Anpharos(){
     setTitle("Anpharos");
@@ -41,8 +43,8 @@ public class Anpharos extends JFrame implements ActionListener{
     add(rotate,c);
 
     c.gridy = 3;
-    move = new JButton("Move");
-    move.setActionCommand("Move");
+    move = new JButton("Move To");
+    move.setActionCommand("MoveTo");
     add(move,c);
 
     c.gridy = 4;
@@ -100,28 +102,29 @@ public class Anpharos extends JFrame implements ActionListener{
   public void actionPerformed(ActionEvent e){
     String command = e.getActionCommand();
     switch(command){
-case "forward":
-  break;
-case "backward":
-  break;
-case "rotate":
-  break;
-case "move":
-  break;
-case "draw":
-  break;
-case "dontdraw":
-  break;
-case "hidesphero":
-  break;
-case "resetpshero":
-  break;
-case "run":
-  break;
-case "save":
-  break;
-case "load":
-  break;
+      case "Forward":
+      sphero.forward();
+        break;
+      case "Backward":
+        break;
+      case "Rotate":
+        break;
+      case "Move":
+        break;
+      case "Draw":
+        break;
+      case "DontDraw":
+        break;
+      case "HideSphero":
+        break;
+      case "ResetSphero":
+        break;
+      case "Run":
+        break;
+      case "Save":
+        break;
+      case "Load":
+        break;
     }
   }
 }
