@@ -26,6 +26,7 @@ public class Sphero{
   }
 
   public void forward(int distance){
+    System.out.println("forward");
     int d = 0;
     while(d < distance){
       x = x + Math.cos(angle);

@@ -8,7 +8,7 @@ public class Anpharos extends JFrame implements ActionListener{
   private JButton forward, backward, rotate, move, draw, dontdraw, hidesphero, resetpshero, run, save, load;
   private GridBagConstraints c = new GridBagConstraints();
   private JTextArea code = new JTextArea(10,10);
-  Sphero sphero = new Sphero(0, 100, 100, "");
+  Sphero sphero;
   Queue<Command> qCommands = new Queue();
 
   public Anpharos(){
@@ -17,6 +17,7 @@ public class Anpharos extends JFrame implements ActionListener{
     setLayout(new GridBagLayout());
     setDefaultCloseOperation(EXIT_ON_CLOSE);
     initComponents();
+    sphero = new Sphero(0, 100, 100, "");
     setVisible(true);
   }
 
@@ -98,12 +99,12 @@ public class Anpharos extends JFrame implements ActionListener{
     add(load,c);
 
   }
-
+  
   public void actionPerformed(ActionEvent e){
     String command = e.getActionCommand();
     switch(command){
       case "Forward":
-      sphero.forward();
+      sphero.forward(100);
         break;
       case "Backward":
         break;

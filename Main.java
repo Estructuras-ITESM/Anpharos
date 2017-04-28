@@ -25,7 +25,7 @@ public class Main {
 
     public static void entrar()
     {
-       ventana.setContentPane();   //Aquí se tiene que abrir la ventana de Anpharos
+       Anpharos a = new Anpharos();   //Aquí se tiene que abrir la ventana de Anpharos
         ventana.setVisible(true);
 
     }
