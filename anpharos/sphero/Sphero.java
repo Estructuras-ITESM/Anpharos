@@ -1,3 +1,5 @@
+package anpharos.sphero;
+
 import java.awt.*;
 import javax.imageio.*;
 import java.io.*;

@@ -1,3 +1,5 @@
+package anpharos.structures;
+
 public class SingleLinkedList <T>{
     protected Node<T> head;
     protected Node<T> tail;

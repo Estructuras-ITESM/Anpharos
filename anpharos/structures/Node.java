@@ -1,3 +1,5 @@
+package anpharos.structures;
+
 public class Node<V> {
     private V element;
     private Node<V> next;
