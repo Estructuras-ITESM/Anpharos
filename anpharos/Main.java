@@ -1,6 +1,11 @@
+package anpharos;
+
+import anpharos.app.Registro;
+import anpharos.gui.Anpharos;
+import anpharos.structures.SingleLinkedList;
+
 import javax.swing.*;
 import java.util.Hashtable;
-
 public class Main {
 
     public static JFrame ventana;
@@ -10,8 +15,8 @@ public class Main {
 
     public static void main(String[] strings)
     {
-        password = new SingleLinkedList<String>();
-        hashTable= new Hashtable<Integer, SingleLinkedList<String>>();
+        password = new SingleLinkedList<>();
+        hashTable= new Hashtable<>();
         password.addFirst("usuario");
         hashTable.put("usuario".hashCode(),password);
         ventana = new JFrame();
@@ -25,7 +30,7 @@ public class Main {
 
     public static void entrar()
     {
-       Anpharos a = new Anpharos();   //Aquí se tiene que abrir la ventana de Anpharos
+       Anpharos a = new Anpharos();   //AquÃ­ se tiene que abrir la ventana de Anpharos
         ventana.setVisible(true);
 
     }
@@ -39,7 +44,7 @@ public class Main {
         }
         else
         {
-           SingleLinkedList<String> lista = new SingleLinkedList<String>();
+           SingleLinkedList<String> lista = new SingleLinkedList<>();
             lista.addLast(password);
             hashTable.put(texto.hashCode(), lista);
         }

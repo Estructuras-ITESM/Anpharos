@@ -1,7 +1,12 @@
+package anpharos.gui;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 
+import anpharos.sphero.Sphero;
+import anpharos.sphero.Command;
+import anpharos.structures.Queue;
 public class Anpharos extends JFrame implements ActionListener{
 
   private SpheroSurface drawing = new SpheroSurface();

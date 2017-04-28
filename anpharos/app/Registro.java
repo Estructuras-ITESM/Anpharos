@@ -1,8 +1,11 @@
+package anpharos.app;
+
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.Hashtable;
 
+import anpharos.Main;
+import anpharos.structures.Node;
 
 public class Registro
 {

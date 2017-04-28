@@ -1,7 +1,11 @@
+package anpharos.app;
+
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Arrays;
+
+import anpharos.Main;
 
 public class Registrarse extends Registro{
     private JPanel registro;

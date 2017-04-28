@@ -10,4 +10,6 @@ javac -cp . anpharos/Main.java
 
 ## Usage
 For running, use:
+```
 java anpharos.Main
+```

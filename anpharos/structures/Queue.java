@@ -1,3 +1,5 @@
+package anpharos.structures;
+
 public class Queue<T>{
 
 	protected Node<T> head;
