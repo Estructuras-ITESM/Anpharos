@@ -2,18 +2,29 @@ package anpharos.sphero;
 
 import java.awt.*;
 import javax.imageio.*;
+
+import anpharos.structures.Node;
+import anpharos.structures.SingleLinkedList;
+
 import java.io.*;
 import java.lang.Math;
 
 public class Sphero{
   private int id, angle;
-  private double x, y;
+  private double x, y, xInicial,yInicial;
+  private boolean hide;
   private Image image;
+  private SingleLinkedList lineas;
+  private Linea linea;
+  SingleLinkedList<Linea> nuevo;
 
   public Sphero(int id, double x, double y, String spheroImage){
     this.id = id;
     this.x = x;
     this.y = y;
+    this.xInicial;
+    this.yInicial;
+    this.hide = hide;
     this.angle = 0;
     try{
       image = ImageIO.read(new File(spheroImage));
@@ -86,4 +97,90 @@ public class Sphero{
       }
     }
   }
+
+  public void reset(double width, double height){
+	  nuevo = new SingleLinkedList<Linea>();
+	  xInicial=0;
+	  yInicial=0;
+	  x = 0;
+	  y = 0;
+	  angle = 0;
+	  lineas = nuevo;
+  }
+  
+  public boolean getHide(){
+	  return hide;
+  }
+  
+  public void setHide(boolean hide){
+	  this.hide=hide;
+  }
+  
+  public void paintSphero(Graphics graphics){
+	  if(hide){
+          graphics.drawString(id, (int)x,(int)y);
+          graphics.drawImage(image, (int) x, (int) y, 50, 50, null);
+          marcarLinea(graphics);
+	  }
+  }
+  
+  public void paintLine(Graphics graphics) {
+
+      linea = new Linea();
+      linea.setX1(xInicial + 25);
+      linea.setX2(x + 25);
+      linea.setY1(yInicial + 25);
+      linea.setY2(y + 25);
+      lineas.addFirst(linea);
+  }
+  
+  public void marcarLinea(Graphics graphics)
+  {
+
+      Node<Linea> lineaTemp = lineas.getFirst();
+      for(int i = 0; i<lineas.getSize();i++)
+      {
+          graphics.drawLine((int)lineaTemp.getElement().getX1(),(int)lineaTemp.getElement().getY1(),(int)lineaTemp.getElement().getX2(),(int)lineaTemp.getElement().getY2());
+          lineaTemp = lineaTemp.getNext();
+
+      }
+  }
+  public int getId() {
+      return id;
+  }
+
+  public void setId(int id) {
+
+      this.id = id;
+  }
+
+  public double getX() {
+      return x;
+  }
+
+
+
+  public double getY() {
+      return y;
+  }
+
+
+  
+  public double getXinicial() {
+      return xInicial;
+  }
+
+  public void setXinicial(double xinicial) {
+      this.xInicial = xInicial;
+  }
+  
+  public double getYinicial() {
+      return yInicial;
+  }
+
+  public void setYinicial(double yInicial) {
+      this.yInicial = yInicial;
+  }
+  
+  
 }
