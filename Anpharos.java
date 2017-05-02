@@ -17,7 +17,7 @@ public class Anpharos extends JFrame{
     this.usuario = usuario;
     sphero = usuario.getSphero(0);
     setTitle("Anpharos");
-    setSize(1500,1500);
+    setSize(1500,1000);
     setLayout(new GridBagLayout());
     setDefaultCloseOperation(EXIT_ON_CLOSE);
     initComponents();

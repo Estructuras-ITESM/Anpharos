@@ -1,6 +1,7 @@
 import java.util.*;
+import java.io.*;
 
-public class Usuario{
+public class Usuario implements Serializable{
   private String nombre, contrasena;
   private LinkedList<Sphero> spheros;
 

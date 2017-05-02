@@ -4,7 +4,7 @@ import java.awt.*;
 import java.awt.event.*;
 import java.io.*;
 
-public class Login extends JFrame implements ActionListener{
+public class Login extends JFrame implements ActionListener, Serializable{
 
     private Hashtable<Integer,Usuario> usuarios;
     private JLabel usuario, contrasena;
@@ -63,15 +63,18 @@ public class Login extends JFrame implements ActionListener{
     public void actionPerformed(ActionEvent e){
         String nombre = u.getText();
         String contra = co.getText();
-        String code = nombre+contra;
-        int hash = code.hashCode();
+        int hash = nombre.hashCode();
         if ("entrar".equals(e.getActionCommand())) {
             if (usuarios.get(hash) != null) {
                 Usuario u = usuarios.get(hash);
+                if (u.getContrasena().equals(contra)) {
                 Anpharos a = new Anpharos(u);
                 dispose();
+                }else{
+                    JOptionPane.showMessageDialog(null, "Contraseña incorrecta");
+                }
             }else{
-                JOptionPane.showMessageDialog(null, "Credenciales incorrectas o usuario inexistente");
+                JOptionPane.showMessageDialog(null, "Usuario incorrecto o inexistente");
             }
         }else if ("registrarse".equals(e.getActionCommand())) {
             if (usuarios.get(hash) == null) {
@@ -85,4 +88,10 @@ public class Login extends JFrame implements ActionListener{
             }
         }
     }
+
+    public static void main(String[] args) {
+        Hashtable<Integer,Usuario> hash = new Hashtable<Integer,Usuario>();
+        Login l = new Login(hash);
+    }
+
 }
