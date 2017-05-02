@@ -26,6 +26,7 @@ public class Sphero{
   }
 
   public void forward(int distance){
+    System.out.println("ha");
     int d = 0;
     while(d < distance){
       x = x + Math.cos(angle);
@@ -34,9 +35,11 @@ public class Sphero{
       try {
         Thread.sleep(1000);                 //1000 milliseconds is one second.
       } catch(InterruptedException ex) {
+        System.out.println("excep");
         Thread.currentThread().interrupt();
-      }   
+      }        
     }
+    System.out.println("he");
   }
 
   public void backward(int distance){
