@@ -28,7 +28,7 @@ public class Sphero{
   public void forward(int distance){
     int d = 0;
     while(d < distance){
-      x = x + Math.cos(angle).........33333....;
+      x = x + Math.cos(angle);
       y = y + Math.sin(angle);
       d++;
       try {
@@ -70,9 +70,9 @@ public class Sphero{
   }
 
   public void moveTo(int x, int y){
-    int dy = y - this.y;
-    int dx = x - this.x;
-    int h = Math.sqrt(Math.pow(dx,2)+Math.pow(dy,2));
+    double dy = y - this.y;
+    double dx = x - this.x;
+    double h = Math.sqrt(Math.pow(dx,2)+Math.pow(dy,2));
     while(dx!=x || dy!=y){
       this.x += (dx/h);
       this.y += (dy/h);

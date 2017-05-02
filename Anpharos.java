@@ -1,6 +1,7 @@
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import java.util.*;
 
 public class Anpharos extends JFrame implements ActionListener{
 
@@ -9,7 +10,7 @@ public class Anpharos extends JFrame implements ActionListener{
   private GridBagConstraints c = new GridBagConstraints();
   private JTextArea code = new JTextArea(10,10);
   Sphero sphero = new Sphero(0, 100, 100, "");
-  Queue<Command> qCommands = new Queue();
+  Queue<Command> qCommands = new Queue<Command>();
 
   public Anpharos(){
     setTitle("Anpharos");
@@ -103,7 +104,7 @@ public class Anpharos extends JFrame implements ActionListener{
     String command = e.getActionCommand();
     switch(command){
       case "Forward":
-      sphero.forward();
+      sphero.forward(100);
         break;
       case "Backward":
         break;

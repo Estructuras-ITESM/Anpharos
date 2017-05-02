@@ -1,87 +1,17 @@
-public class Queue<T>{
+import java.util.LinkedList;
 
-	protected Node<T> head;
-	protected Node<T> tail;
-	protected int size;
+public class Queue<T> extends LinkedList<T>{
 
 	public Queue(){
-		head = null;
-		tail = null;
-		size = 0;
+		super();
 	}
 
-	public void enqueue(Node<T> node){
-		if(size>0){
-			tail.setNext(node);
-			node.setNext(null);
-			tail = node;
-		} else {
-			node.setNext(null);
-			head = node;
-			tail = node;
-		}
-		size++;
-	}
-	
-	public Node<T> dequeue(){
-		Node<T> toBeDequeued = head;
-		head = head.getNext();
-		toBeDequeued.setNext(null);
-		size--;
-		return toBeDequeued;
+	public void enqueue(T t){
+		this.addLast(t);
 	}
 
-
-	public Node<T> get(int index){
-//		System.out.println("index "+index);
-//		System.out.println("size "+size);
-		if(index<size && index>=0){
-			int i = 0;
-			Node<T> current = head;
-			while(i<index){
-				current = current.getNext();
-				i++;
-			}
-			return current;
-		} else {
-			System.out.println("ERROR get int");
-			return new Node<T>();
-		}
-	}
-
-	public Node<T> get(long index){
-		if(index<size && index>=0){
-			int i = 0;
-			Node<T> current = head;
-			while(i<index){
-				current = current.getNext();
-				i++;
-			}
-			return current;
-		} else {
-			System.out.println("ERROR get long");
-			return new Node<T>();
-		}
-	}
-
-	public Node<T> getFirst(){
-		return head;
-	}
-
-	public Node<T> getLast(){
-		return tail;
-	}
-
-	public long getSize(){
-		return size;
-	}
-
-	public boolean isEmpty(){
-		if(size>0){
-			return false;
-		} else {
-			return true;
-		}
+	public T dequeue(){
+		return this.removeFirst();
 	}
 
 }
