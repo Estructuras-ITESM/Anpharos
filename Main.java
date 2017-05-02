@@ -1,5 +1,8 @@
+import java.util.*;
+
 public class Main{
-  public static void main(String[] args){
-    Anpharos a = new Anpharos();
+  public static void main(String[] args) {
+        Hashtable<Integer,Usuario> hash = new Hashtable<Integer,Usuario>();
+        Login l = new Login(hash);
   }
 }

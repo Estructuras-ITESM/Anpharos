@@ -56,9 +56,4 @@ public class Login extends JFrame{
         add(u,c);
     }
 
-    public static void main(String[] args) {
-        Hashtable<Integer,Usuario> hash = new Hashtable<Integer,Usuario>();
-        Login l = new Login(hash);
-  }
-
 }
