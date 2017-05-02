@@ -31,15 +31,8 @@ public class Sphero{
     while(d < distance){
       x = x + Math.cos(angle);
       y = y + Math.sin(angle);
-      d++;
-      try {
-        Thread.sleep(1000);                 //1000 milliseconds is one second.
-      } catch(InterruptedException ex) {
-        System.out.println("excep");
-        Thread.currentThread().interrupt();
-      }        
+      d++;       
     }
-    System.out.println("he");
   }
 
   public void backward(int distance){
@@ -47,12 +40,7 @@ public class Sphero{
     while(d < distance){
       x = x - Math.cos(angle);
       y = y - Math.sin(angle);
-      d++;
-      try {
-        Thread.sleep(1000);                 //1000 milliseconds is one second.
-      } catch(InterruptedException ex) {
-        Thread.currentThread().interrupt();
-      }         
+      d++;    
     }
   }
 
@@ -61,11 +49,6 @@ public class Sphero{
     while(a < angle){
       this.angle++;
       a++;
-      try {
-        Thread.sleep(1000);                 //1000 milliseconds is one second.
-      } catch(InterruptedException ex) {
-        Thread.currentThread().interrupt();
-      }  
     }
     if(this.angle >= 360){
       this.angle -= 360;
@@ -73,17 +56,11 @@ public class Sphero{
   }
 
   public void moveTo(int x, int y){
-    double dy = y - this.y;
-    double dx = x - this.x;
-    double h = Math.sqrt(Math.pow(dx,2)+Math.pow(dy,2));
-    while(dx!=x || dy!=y){
-      this.x += (dx/h);
-      this.y += (dy/h);
-      try {
-        Thread.sleep(1000);                 //1000 milliseconds is one second.
-      } catch(InterruptedException ex) {
-        Thread.currentThread().interrupt();
-      }  
-    }
+    this.x = x;
+    this.y = y;
+  }
+
+  public int getAngle(){
+    return angle;
   }
 }

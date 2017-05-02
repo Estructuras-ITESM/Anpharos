@@ -116,21 +116,34 @@ public class Anpharos extends JFrame{
       String command = e.getActionCommand();
       switch(command){
         case "Forward":
-        System.out.println("hey");
-        sphero.forward(100);
-        System.out.println("ho");
+          if(!drawing.tm.isRunning()){
+            drawing.forward(sphero.getAngle(), 100);
+//            sphero.forward(100);
+          }
           break;
         case "Backward":
+          if(!drawing.tm.isRunning()){
+            drawing.backward(sphero.getAngle(), 100);
+//            sphero.backward(100);
+          }
           break;
         case "Rotate":
+          sphero.rotate(45);
           break;
-        case "Move":
+        case "MoveTo":
+          if(!drawing.tm.isRunning()){
+            drawing.moveTo(200, 200);
+//            sphero.moveTo(200,200);
+          }
           break;
         case "Draw":
           break;
         case "DontDraw":
           break;
         case "HideSphero":
+          if(!drawing.tm.isRunning()){
+            drawing.hideSphero();
+          }
           break;
         case "ResetSphero":
           break;
