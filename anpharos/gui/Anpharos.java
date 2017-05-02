@@ -6,7 +6,7 @@ import java.awt.event.*;
 
 import anpharos.sphero.Sphero;
 import anpharos.sphero.Command;
-import anpharos.structures.Queue;
+import anpharos.gui.SpheroSurface;
 public class Anpharos extends JFrame implements ActionListener{
 
   private SpheroSurface drawing = new SpheroSurface();
@@ -14,7 +14,7 @@ public class Anpharos extends JFrame implements ActionListener{
   private GridBagConstraints c = new GridBagConstraints();
   private JTextArea code = new JTextArea(10,10);
   Sphero sphero;
-  Queue<Command> qCommands = new Queue();
+//  Queue<Command> qCommands = new Queue();
 
   public Anpharos(){
     setTitle("Anpharos");
