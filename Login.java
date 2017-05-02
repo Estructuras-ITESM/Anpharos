@@ -90,8 +90,25 @@ public class Login extends JFrame implements ActionListener, Serializable{
     }
 
     public static void main(String[] args) {
-        Hashtable<Integer,Usuario> hash = new Hashtable<Integer,Usuario>();
-        Login l = new Login(hash);
+        /*Hashtable<Integer,Usuario> hash = new Hashtable<Integer,Usuario>();
+        Login l = new Login(hash);*/
+        try{
+          FileInputStream fis = new FileInputStream("UsuarioBD.sph");
+          ObjectInputStream ois = new ObjectInputStream(fis);
+          Hashtable<Integer,Usuario> hashTable = (Hashtable<Integer,Usuario>) ois.readObject();
+          ois.close();
+          fis.close();
+          Login l = new Login(hashTable);
+        }catch(IOException i){
+          JOptionPane.showMessageDialog(null, "ERROR: No existe el archivo");
+          Hashtable<Integer,Usuario> ht = new Hashtable<Integer,Usuario>();
+          String n = "Hola2";
+          String contr = "hOla1";
+          ht.put(n.hashCode(), new Usuario(n, contr));
+          Login l = new Login(ht);
+        }catch(ClassNotFoundException c){
+          c.printStackTrace();
+        }
     }
 
 }
