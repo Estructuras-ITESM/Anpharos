@@ -9,6 +9,7 @@ public class Usuario{
     this.nombre = nombre;
     this.contrasena = contrasena;
     spheros = new LinkedList<Sphero>();
+    spheros.add(new Sphero(0,100,100,""));
   }
 
   public String getNombre(){

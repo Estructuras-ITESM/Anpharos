@@ -9,10 +9,13 @@ public class Anpharos extends JFrame{
   private JButton forward, backward, rotate, move, draw, dontdraw, hidesphero, resetsphero, run, save, load;
   private GridBagConstraints c = new GridBagConstraints();
   private JTextArea code = new JTextArea(10,10);
-  Sphero sphero = new Sphero(0, 100, 100, "");
-  Queue<Command> qCommands = new Queue<Command>();
+  private Sphero sphero;
+  private Queue<Command> qCommands = new Queue<Command>();
+  private Usuario usuario;
 
-  public Anpharos(){
+  public Anpharos(Usuario usuario){
+    this.usuario = usuario;
+    sphero = usuario.getSphero(0);
     setTitle("Anpharos");
     setSize(1500,1500);
     setLayout(new GridBagLayout());

@@ -4,7 +4,7 @@ import java.awt.*;
 import java.awt.event.*;
 import java.io.*;
 
-public class Login extends JFrame{
+public class Login extends JFrame implements ActionListener{
 
     private Hashtable<Integer,Usuario> usuarios;
     private JLabel usuario, contrasena;
@@ -28,7 +28,11 @@ public class Login extends JFrame{
         u = new JTextField(6);
         co = new JTextField(6);
         registrarse = new JButton("Crear");
+        registrarse.addActionListener(this);
+        registrarse.setActionCommand("registrarse");
         entrar = new JButton("Entrar");
+        entrar.addActionListener(this);
+        entrar.setActionCommand("entrar");
 
         c.fill = GridBagConstraints.BOTH;
         c.weighty = 1.0;
@@ -56,4 +60,29 @@ public class Login extends JFrame{
         add(u,c);
     }
 
+    public void actionPerformed(ActionEvent e){
+        String nombre = u.getText();
+        String contra = co.getText();
+        String code = nombre+contra;
+        int hash = code.hashCode();
+        if ("entrar".equals(e.getActionCommand())) {
+            if (usuarios.get(hash) != null) {
+                Usuario u = usuarios.get(hash);
+                Anpharos a = new Anpharos(u);
+                dispose();
+            }else{
+                JOptionPane.showMessageDialog(null, "Credenciales incorrectas o usuario inexistente");
+            }
+        }else if ("registrarse".equals(e.getActionCommand())) {
+            if (usuarios.get(hash) == null) {
+                Usuario u = new Usuario(nombre, contra);
+                usuarios.put(hash,u);
+                Anpharos a = new Anpharos(u);
+                JOptionPane.showMessageDialog(null, "Tu cuenta ha sido creada");
+                dispose();
+            }else{
+                JOptionPane.showMessageDialog(null, "Esa cuenta ya existe");
+            }
+        }
+    }
 }
