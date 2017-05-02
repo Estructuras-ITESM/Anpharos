@@ -1,14 +1,12 @@
 package anpharos;
-
-import anpharos.app.Registro;
-import anpharos.gui.Anpharos;
-import anpharos.structures.SingleLinkedList;
-
 import javax.swing.*;
 import java.util.Hashtable;
+import anpharos.app.*;
 public class Main {
 
     public static void main(String[] strings)
     {
-       Anpharos a = new Anpharos(); 
+        Hashtable<Integer,Usuario> hash = new Hashtable<Integer,Usuario>();
+        Login l = new Login(hash);
+    }
 }
