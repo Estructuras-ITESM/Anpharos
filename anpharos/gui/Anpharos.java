@@ -17,7 +17,6 @@ public class Anpharos extends JFrame{
     private Sphero sphero;
     private Queue<Command> qCommands = new Queue<Command>();
     private Usuario usuario;
-    private int steps;
 
     public Anpharos(Usuario usuario){
         this.usuario = usuario;
@@ -124,14 +123,14 @@ public class Anpharos extends JFrame{
                 case "Forward":
                     if(!drawing.tm.isRunning()){
                         String aux = JOptionPane.showInputDialog("¿Cuanto quieres desplazarte hacia delante?");
-                        steps = Integer.parseInt(aux);
+                        int steps = Integer.parseInt(aux);
                     	drawing.forward(sphero.getAngle(), steps);
                     }
                     break;
                 case "Backward":
                     if(!drawing.tm.isRunning()){
                         String aux = JOptionPane.showInputDialog("¿Cuanto quieres desplazarte hacia atrás?");
-                        steps = Integer.parseInt(aux);
+                        int steps = Integer.parseInt(aux);
                         drawing.backward(sphero.getAngle(), steps);
                     }
                     break;
@@ -143,10 +142,10 @@ public class Anpharos extends JFrame{
                 case "MoveTo":
                     if(!drawing.tm.isRunning()){
                         String aux1 = JOptionPane.showInputDialog("¿Cuanto quieres desplazarte en x?");
-                        int stepsx = Integer.parseInt(aux1);
-                        String aux2 = JOptionPane.showInputDialog("¿Cuanto quieres desplazarte en x?");
-                        int stepsy = Integer.parseInt(aux2);
-                    	drawing.moveTo(stepsx, stepsy);
+                        int dx = Integer.parseInt(aux1);
+                        String aux2 = JOptionPane.showInputDialog("¿Cuanto quieres desplazarte en y?");
+                        int dy = Integer.parseInt(aux2);
+                        drawing.moveTo(dx, dy);
 //            sphero.moveTo(200,200);
                     }
                     break;
