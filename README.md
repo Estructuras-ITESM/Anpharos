@@ -12,13 +12,18 @@ javac -cp . anpharos/Main.java
 
 ### Windows
 ```
-javac -cp . anpharos\Main.java
+javac -classpath . anpharos\Main.java
 ```
-
-
 
 ## Usage
 For running, use:
+
+### UNIX
 ```
 java anpharos.Main
+```
+
+#### Windows
+```
+java -classpath . anpharos.Main
 ```
