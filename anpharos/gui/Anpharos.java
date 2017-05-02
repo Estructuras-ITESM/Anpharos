@@ -17,6 +17,7 @@ public class Anpharos extends JFrame{
     private Sphero sphero;
     private Queue<Command> qCommands = new Queue<Command>();
     private Usuario usuario;
+    private int steps;
 
     public Anpharos(Usuario usuario){
         this.usuario = usuario;
@@ -122,22 +123,30 @@ public class Anpharos extends JFrame{
             switch(command){
                 case "Forward":
                     if(!drawing.tm.isRunning()){
-                        drawing.forward(sphero.getAngle(), 100);
-//            sphero.forward(100);
+                        String aux = JOptionPane.showInputDialog("¿Cuanto quieres desplazarte hacia delante?");
+                        steps = Integer.parseInt(aux);
+                    	drawing.forward(sphero.getAngle(), steps);
                     }
                     break;
                 case "Backward":
                     if(!drawing.tm.isRunning()){
-                        drawing.backward(sphero.getAngle(), 100);
-//            sphero.backward(100);
+                        String aux = JOptionPane.showInputDialog("¿Cuanto quieres desplazarte hacia atrás?");
+                        steps = Integer.parseInt(aux);
+                        drawing.backward(sphero.getAngle(), steps);
                     }
                     break;
                 case "Rotate":
-                    sphero.rotate(45);
+                    String aux = JOptionPane.showInputDialog("Escribe el ángulo que deseas");
+                    int ang = Integer.parseInt(aux);
+                	sphero.rotate(ang);
                     break;
                 case "MoveTo":
                     if(!drawing.tm.isRunning()){
-                        drawing.moveTo(200, 200);
+                        String aux1 = JOptionPane.showInputDialog("¿Cuanto quieres desplazarte en x?");
+                        int stepsx = Integer.parseInt(aux1);
+                        String aux2 = JOptionPane.showInputDialog("¿Cuanto quieres desplazarte en x?");
+                        int stepsy = Integer.parseInt(aux2);
+                    	drawing.moveTo(stepsx, stepsy);
 //            sphero.moveTo(200,200);
                     }
                     break;
@@ -151,6 +160,7 @@ public class Anpharos extends JFrame{
                     }
                     break;
                 case "ResetSphero":
+                	drawing.moveTo(0, 0);
                     break;
                 case "Run":
                     break;
