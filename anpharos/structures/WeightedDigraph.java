@@ -54,9 +54,9 @@ public class WeightedDigraph {
     public double[][] toMatrix() {
         double[][] matrix = new double[E][E];
         String tmp = "";
-        System.out.println(this.adj.length);
+        System.out.println(this.V);
         System.out.println(Arrays.toString(adj));
-        for (int i = 0; i < adj.length; i++) {
+        for (int i = 0; i < V; i++) {
             for (int j = 0; j < adj[i].size(); j++) {
                 matrix[adj[i].get(j).from()][adj[i].get(j).to()] = adj[i].get(j).getWeight();
             }
