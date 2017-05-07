@@ -38,16 +38,21 @@ public class WeightedDigraph {
     public void addNodeRelationship(String origin, String destination, int weight) {
         GraphNode tmpOrigin = nodeName.get(origin);
         GraphNode tmpDestination = nodeName.get(destination);
-        System.out.println("Origin"  + tmpOrigin + " Destination " + tmpDestination);
+        System.out.println("Origin "  + tmpOrigin + " Destination " + tmpDestination);
         if (adjList.containsKey(tmpOrigin)) {
-            ArrayList<Edge> tmp = adjList.get(tmpOrigin);
-            tmp.add(new Edge(tmpOrigin, tmpDestination, weight));
-            adjList.put(tmpOrigin, tmp);
+            ArrayList<Edge> tmpOriginAdj = adjList.get(tmpOrigin);
+            tmpOriginAdj.add(new Edge(tmpOrigin, tmpDestination, weight));
+            adjList.put(tmpOrigin, tmpOriginAdj);
         } else {
-            ArrayList<Edge> tmp = new ArrayList<>();
-            tmp.add(new Edge(tmpOrigin, tmpDestination, weight));
-            adjList.put(tmpOrigin, tmp);
+            ArrayList<Edge> tmpOriginAdj = new ArrayList<>();
+            tmpOriginAdj.add(new Edge(tmpOrigin, tmpDestination, weight));
+            adjList.put(tmpOrigin, tmpOriginAdj);
         }
+    }
+
+    public void addBinaryNodeRelationShip(String origin, String destination, int weight){
+        addNodeRelationship(origin, destination, weight);
+        addNodeRelationship(destination, origin,weight);
     }
 
     public int[][] toMatrix() {
@@ -114,20 +119,44 @@ public class WeightedDigraph {
 
     public static void main(String[] args) {
         ArrayList<String> nodes = new ArrayList<>();
-        nodes.add(new String("Barcelona"));
-        nodes.add(new String("Madrid"));
-        nodes.add(new String("Coruña"));
-        nodes.add(new String("Valencia"));
-        nodes.add(new String("San José"));
-        nodes.add(new String("Valladolid"));
-        nodes.add(new String("León"));
+//        nodes.add(new String("Barcelona"));
+//        nodes.add(new String("Madrid"));
+//        nodes.add(new String("Coruña"));
+//        nodes.add(new String("Valencia"));
+//        nodes.add(new String("San José"));
+//        nodes.add(new String("Valladolid"));
+//        nodes.add(new String("León"));
+//        WeightedDigraph tmp = new WeightedDigraph(nodes);
+//        tmp.addBinaryNodeRelationShip("Barcelona", "Madrid", 10);
+//        tmp.addBinaryNodeRelationShip("Barcelona", "Coruña", 20);
+//        tmp.addNodeRelationship("Barcelona", "León", 40);
+//        tmp.addNodeRelationship("Madrid", "Valencia", 30);
+//        tmp.addNodeRelationship("Madrid", "San José", 40);
+//        tmp.addNodeRelationship("Madrid", "Valladolid", 50);
+        nodes.add("0");
+        nodes.add("1");
+        nodes.add("2");
+        nodes.add("3");
+        nodes.add("4");
+        nodes.add("5");
+        nodes.add("6");
+        nodes.add("7");
+        nodes.add("8");
         WeightedDigraph tmp = new WeightedDigraph(nodes);
-        tmp.addNodeRelationship("Barcelona", "Madrid", 10);
-        tmp.addNodeRelationship("Barcelona", "Coruña", 20);
-        tmp.addNodeRelationship("Barcelona", "León", 40);
-        tmp.addNodeRelationship("Madrid", "Valencia", 30);
-        tmp.addNodeRelationship("Madrid", "San José", 40);
-        tmp.addNodeRelationship("Madrid", "Valladolid", 50);
+        tmp.addBinaryNodeRelationShip("0","1", 4);
+        tmp.addBinaryNodeRelationShip("0","7",8);
+        tmp.addBinaryNodeRelationShip("1","2",8);
+        tmp.addBinaryNodeRelationShip("1","7",11);
+        tmp.addBinaryNodeRelationShip("2","3",7);
+        tmp.addBinaryNodeRelationShip("2","8",2);
+        tmp.addBinaryNodeRelationShip("2","5",4);
+        tmp.addBinaryNodeRelationShip("3","4",9);
+        tmp.addBinaryNodeRelationShip("3","5",14);
+        tmp.addBinaryNodeRelationShip("4","5",10);
+        tmp.addBinaryNodeRelationShip("5","6",2);
+        tmp.addBinaryNodeRelationShip("6","7",1);
+        tmp.addBinaryNodeRelationShip("6","8",6);
+        tmp.addBinaryNodeRelationShip("7","8",7);
         System.out.println(tmp.hashMapToString(tmp.nodeName));
         System.out.println(tmp.hashMapToString(tmp.nodePosition));
         System.out.println(tmp.hashMapToString(tmp.adjList));
