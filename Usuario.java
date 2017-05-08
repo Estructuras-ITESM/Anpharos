@@ -10,7 +10,7 @@ public class Usuario implements Serializable{
     this.nombre = nombre;
     this.contrasena = contrasena;
     spheros = new LinkedList<Sphero>();
-    spheros.add(new Sphero(0,100,100,""));
+    spheros.add(new Sphero(100,100,""));
   }
 
   public String getNombre(){
@@ -35,5 +35,9 @@ public class Usuario implements Serializable{
 
   public void setSphero(Sphero sphero){
     spheros.add(sphero);
+  }
+
+  public LinkedList<Sphero> getList(){
+    return spheros;
   }
 } 

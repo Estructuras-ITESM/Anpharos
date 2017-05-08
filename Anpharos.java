@@ -6,12 +6,14 @@ import java.util.*;
 public class Anpharos extends JFrame{
 
   private SpheroSurface drawing = new SpheroSurface();
-  private JButton forward, backward, rotate, move, draw, dontdraw, hidesphero, resetsphero, run, save, load;
+  private JButton forward, backward, rotate, move, draw, dontdraw, hidesphero, resetsphero, run, save, load, create;
   private GridBagConstraints c = new GridBagConstraints();
   private JTextArea code = new JTextArea(10,10);
   private Sphero sphero;
   private Queue<Command> qCommands = new Queue<Command>();
   private Usuario usuario;
+  private JComboBox select;
+  private String [] sph;
 
   public Anpharos(Usuario usuario){
     this.usuario = usuario;
@@ -20,6 +22,8 @@ public class Anpharos extends JFrame{
     setSize(1500,1000);
     setLayout(new GridBagLayout());
     setDefaultCloseOperation(EXIT_ON_CLOSE);
+    sph = new String[usuario.getList().size()];
+    fillArray();
     initComponents();
     setVisible(true);
   }
@@ -55,29 +59,55 @@ public class Anpharos extends JFrame{
     move.addActionListener(new QueueListener());
     add(move,c);
 
+    c.gridwidth = 1;
     c.gridy = 4;
     draw = new JButton("Draw");
     draw.setActionCommand("Draw");
     draw.addActionListener(new QueueListener());
     add(draw,c);
 
-    c.gridy = 5;
+    c.gridx = 1;
     dontdraw = new JButton("DontDraw");
     dontdraw.setActionCommand("DontDraw");
     dontdraw.addActionListener(new QueueListener());
     add(dontdraw,c);
 
-    c.gridy = 6;
+    c.gridwidth = 2;
+    c.gridy = 5;
+    c.gridx = 0;
     hidesphero = new JButton("HideSphero");
     hidesphero.setActionCommand("HideSphero");
     hidesphero.addActionListener(new QueueListener());
     add(hidesphero,c);
 
-    c.gridy = 7;
+    c.gridy = 6;
     resetsphero = new JButton("ResetSphero");
     resetsphero.setActionCommand("ResetSphero");
     resetsphero.addActionListener(new QueueListener());
     add(resetsphero,c);
+
+    c.gridwidth = 1;
+    c.gridy = 7;
+    create = new JButton("Create");
+    create.setActionCommand("Create");
+    create.addActionListener(new QueueListener());
+    add(create,c);
+
+    c.gridx = 1;
+    JPanel pane = new JPanel(new GridBagLayout());
+    select =  new JComboBox(sph);
+    JLabel lbl = new JLabel("Current Sphero: ");
+    GridBagConstraints g = new GridBagConstraints();
+    g.fill = GridBagConstraints.BOTH;
+
+    g.weighty = 1.0;
+    g.weightx = 1.0;
+    g.gridx = 0;
+    g.gridy = 0;
+    pane.add(lbl,g);
+    g.gridy = 1;
+    pane.add(select,g);
+    add(pane,c);
 
     c.gridx = 2;
     c.gridy = 0;
@@ -118,13 +148,13 @@ public class Anpharos extends JFrame{
         case "Forward":
           if(!drawing.tm.isRunning()){
             drawing.forward(sphero.getAngle(), 100);
-//            sphero.forward(100);
+            sphero.forward(100);
           }
           break;
         case "Backward":
           if(!drawing.tm.isRunning()){
             drawing.backward(sphero.getAngle(), 100);
-//            sphero.backward(100);
+            sphero.backward(100);
           }
           break;
         case "Rotate":
@@ -147,6 +177,8 @@ public class Anpharos extends JFrame{
           break;
         case "ResetSphero":
           break;
+        case "Create":
+          break;
         case "Run":
           break;
         case "Save":
@@ -154,6 +186,14 @@ public class Anpharos extends JFrame{
         case "Load":
           break;
       }
+    }
+  }
+
+  public void fillArray(){
+    int l = 0;
+    for ( Sphero s : usuario.getList()) {
+      sph[l] = "Sphero - "+(l+1);
+      l++;
     }
   }
 
