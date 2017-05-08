@@ -1,8 +1,9 @@
 package anpharos.structures.Graph;
 
-import sun.rmi.server.InactiveGroupException;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.PriorityQueue;
 
 /**
@@ -13,6 +14,7 @@ public class Dijkstra {
     PriorityQueue<GraphNodePriority> pq;
     WeightedDigraph graph;
     GraphNode source;
+    Map<GraphNode, Edge> edgesMap;
 
     Dijkstra(WeightedDigraph graph) {
         this.graph = graph;
@@ -21,6 +23,7 @@ public class Dijkstra {
         for (int i = 0; i < dist.length; i++) {
             dist[i] = Integer.MAX_VALUE;
         }
+        edgesMap = new HashMap<>();
     }
 
     public void setSource(String node) {
@@ -29,7 +32,7 @@ public class Dijkstra {
         dist[graph.getNodePosition(node)] = 0;
     }
 
-    public int[] getDistances() {
+    private void calcDistances() {
         while (!pq.isEmpty()) {
         GraphNode u = pq.poll().getNode();
         int uPos = graph.getNodePosition(u);
@@ -38,10 +41,20 @@ public class Dijkstra {
             if (dist[vPos] > dist[uPos] + e.weight) {
                 dist[vPos] = dist[uPos] + e.weight;
                 pq.add(new GraphNodePriority(e.to, dist[uPos] + e.weight));
+                edgesMap.put(e.to, e);
             }
         }
         }
+    }
+
+    public int[] getDistances(){
+        this.calcDistances();
         return dist;
+    }
+
+    public Map<GraphNode, Edge> distTree(){
+        this.calcDistances();
+        return edgesMap;
     }
 
     public static void main(String[] args) {

@@ -7,7 +7,6 @@ public class GraphNodePriority implements Comparable<GraphNodePriority> {
     GraphNode node;
     int priority;
 
-
     public GraphNodePriority(String name, int priority) {
         node = new GraphNode(name);
         this.priority = priority;
