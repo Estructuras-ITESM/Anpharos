@@ -1,4 +1,5 @@
 import java.io.Serializable;
+import java.util.*;
 
 public class Usuario implements Serializable{
   private String nombre, contrasena;
@@ -32,6 +33,10 @@ public class Usuario implements Serializable{
 
   public void enqueueInstruction(Instruction instruction){
     program.getInstructionQueue().enqueue(instruction);
+  }
+
+  public LinkedList<Sphero> getList(){
+    return program.getSpheroList();
   }
 
 } 

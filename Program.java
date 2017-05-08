@@ -9,7 +9,7 @@ public class Program{
 	public Program(){
 		instructionQueue = new Queue<Instruction>();
 		spheroList = new LinkedList<Sphero>();
-		spheroList.add(new Sphero(0, 100, 100, ""));
+		spheroList.add(new Sphero(100, 100, ""));
 	}
 
 	public Queue<Instruction> getInstructionQueue(){
