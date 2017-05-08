@@ -18,9 +18,9 @@ public class GraphParent extends PApplet{
 
     public void setup() {
         cp5 = new ControlP5(this);
-        dijkstra = cp5.addButton("Start Dijkstra").setPosition(width/4,20).setSize(100*multiplier,20*multiplier );
-        dfs = cp5.addButton("Start DFS").setPosition(2*width/4, 20).setSize(100*multiplier,20*multiplier );
-        bfs = cp5.addButton("Start BFS").setPosition(3*width/4,20).setSize(100*multiplier,20*multiplier );
+        dijkstra = cp5.addButton("Start Dijkstra").setPosition(width/4,20*multiplier).setSize(100*multiplier,20*multiplier );
+        dfs = cp5.addButton("Start DFS").setPosition(2*width/4, 20*multiplier).setSize(100*multiplier,20*multiplier );
+        bfs = cp5.addButton("Start BFS").setPosition(3*width/4,20*multiplier).setSize(100*multiplier,20*multiplier );
         sphero = new Sphero(this, multiplier);
         spainGraph = new SpainGraph(this, multiplier);
     }
@@ -32,6 +32,10 @@ public class GraphParent extends PApplet{
 
     public static void init(){
         PApplet.main("anpharos.gui.Graph.GraphParent");
+    }
+
+    public void mousePressed(){
+        System.out.println("X: "+this.mouseX/multiplier + " Y: " + mouseY/multiplier);
     }
 
     public static void main(String[] args){
