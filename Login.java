@@ -68,7 +68,7 @@ public class Login extends JFrame implements ActionListener, Serializable{
             if (usuarios.get(hash) != null) {
                 Usuario u = usuarios.get(hash);
                 if (u.getContrasena().equals(contra)) {
-                Anpharos a = new Anpharos(u);
+                Anpharos a = new Anpharos(u,usuarios);
                 dispose();
                 }else{
                     JOptionPane.showMessageDialog(null, "Contraseña incorrecta");
@@ -80,7 +80,7 @@ public class Login extends JFrame implements ActionListener, Serializable{
             if (usuarios.get(hash) == null) {
                 Usuario u = new Usuario(nombre, contra);
                 usuarios.put(hash,u);
-                Anpharos a = new Anpharos(u);
+                Anpharos a = new Anpharos(u,usuarios);
                 JOptionPane.showMessageDialog(null, "Tu cuenta ha sido creada");
                 dispose();
             }else{

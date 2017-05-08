@@ -17,9 +17,11 @@ public class Anpharos extends JFrame{
   private int currentSphero;
   private int cenx = 100;
   private int ceny = 100;
+  private Hashtable<Integer,Usuario> usuarios;
 
-  public Anpharos(Usuario usuario){
+  public Anpharos(Usuario usuario, Hashtable<Integer,Usuario> usuarios){
     this.usuario = usuario;
+    this.usuarios = usuarios;
     sphero = usuario.getSphero(0);
     currentSphero = 0;
     setTitle("Anpharos");
