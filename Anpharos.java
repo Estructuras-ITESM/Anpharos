@@ -6,7 +6,7 @@ import java.util.*;
 public class Anpharos extends JFrame{
 
   private SpheroSurface drawing = new SpheroSurface();
-  private JButton forward, backward, rotate, move, draw, dontdraw, hidesphero, resetsphero, run, save, load, create;
+  private JButton forward, backward, rotate, move, draw, dontdraw, hidesphero, resetsphero, run, save, load, create, clear, graph;
   private GridBagConstraints c = new GridBagConstraints();
   private JTextArea code = new JTextArea(10,10);
   private Sphero sphero;
@@ -21,7 +21,7 @@ public class Anpharos extends JFrame{
     sphero = usuario.getSphero(0);
     currentSphero = 0;
     setTitle("Anpharos");
-    setSize(1500,1000);
+    setSize(1200,550);
     setLayout(new GridBagLayout());
     setDefaultCloseOperation(EXIT_ON_CLOSE);
     sph = new String[usuario.getList().size()];
@@ -77,16 +77,29 @@ public class Anpharos extends JFrame{
     c.gridwidth = 2;
     c.gridy = 5;
     c.gridx = 0;
+    GridBagConstraints g = new GridBagConstraints();
+    g.fill = GridBagConstraints.BOTH;
+    g.weighty = 1.0;
+    g.weightx = 1.0;
+    g.gridx = 0;
+    g.gridy = 0;
+    JPanel j = new JPanel(new GridBagLayout());
     hidesphero = new JButton("HideSphero");
     hidesphero.setActionCommand("HideSphero");
     hidesphero.addActionListener(new QueueListener());
-    add(hidesphero,c);
-
-    c.gridy = 6;
+    j.add(hidesphero,g);
+    g.gridy = 1;
     resetsphero = new JButton("ResetSphero");
     resetsphero.setActionCommand("ResetSphero");
     resetsphero.addActionListener(new QueueListener());
-    add(resetsphero,c);
+    j.add(resetsphero,g);
+    add(j,c);
+
+    c.gridy = 6;
+    graph = new JButton("Graph");
+    graph.setActionCommand("Graph");
+    graph.addActionListener(new QueueListener());
+    add(graph,c);
 
     c.gridwidth = 1;
     c.gridy = 7;
@@ -98,13 +111,8 @@ public class Anpharos extends JFrame{
     c.gridx = 1;
     JPanel pane = new JPanel(new GridBagLayout());
     select =  new JComboBox(sph);
-    JLabel lbl = new JLabel("Current Sphero: ");
-    GridBagConstraints g = new GridBagConstraints();
-    g.fill = GridBagConstraints.BOTH;
-
-    g.weighty = 1.0;
-    g.weightx = 1.0;
-    g.gridx = 0;
+    JLabel lbl = new JLabel("   Current Sphero: ");
+    
     g.gridy = 0;
     pane.add(lbl,g);
     g.gridy = 1;
@@ -115,7 +123,7 @@ public class Anpharos extends JFrame{
     c.gridy = 0;
     c.gridwidth = 5;
     c.gridheight = 10;
-    drawing.setPreferredSize(new Dimension(750,750));
+    drawing.setPreferredSize(new Dimension(750,500));
     add(drawing,c);
 
     c.gridwidth = 3;
@@ -132,14 +140,20 @@ public class Anpharos extends JFrame{
     add(run,c);
 
     c.gridx = 8;
-    save = new JButton("Save");
-    save.setActionCommand("Save");
-    add(save,c);
+    clear = new JButton("Clear");
+    clear.setActionCommand("Clear");
+    add(clear,c);
 
     c.gridx = 9;
+    JPanel p = new JPanel(new GridBagLayout());
+    save = new JButton("Save");
+    save.setActionCommand("Save");
+    p.add(save,g);
+    g.gridy = 0;
     load = new JButton("Load");
     load.setActionCommand("Load");
-    add(load,c);
+    p.add(load,g);
+    add(p,c);
 
   }
 
@@ -247,9 +261,13 @@ public class Anpharos extends JFrame{
           break;
         case "ResetSphero":
           break;
+        case "Graph":
+          break;
         case "Create":
           break;
         case "Run":
+          break;
+        case "Clear":
           break;
         case "Save":
           break;
