@@ -30,13 +30,17 @@ public class Usuario implements Serializable{
   public Sphero getSphero(int i){
     return program.getSpheroList().get(i);
   }
-
+  
   public void enqueueInstruction(Instruction instruction){
     program.getInstructionQueue().enqueue(instruction);
   }
 
   public LinkedList<Sphero> getList(){
     return program.getSpheroList();
+  }
+
+  public void addSphero(){
+    program.getSpheroList().add(new Sphero(100, 100, ""));
   }
 
 } 

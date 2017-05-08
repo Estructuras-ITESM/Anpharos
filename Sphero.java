@@ -7,11 +7,13 @@ public class Sphero{
   private int angle;
   private double x, y;
   private Image image;
+  boolean show;
 
   public Sphero(double x, double y, String spheroImage){
     this.x = x;
     this.y = y;
     this.angle = 0;
+    show = true;
     try{
       image = ImageIO.read(new File(spheroImage));
     } catch (IOException io){
@@ -59,7 +61,23 @@ public class Sphero{
     this.y = y;
   }
 
+  public void hideSphero(){
+    show = !show;
+  }
+
   public int getAngle(){
     return angle;
+  }
+
+  public double getX(){
+    return x;
+  }
+
+  public double getY(){
+    return y;
+  }
+
+  public boolean isShown(){
+    return show;
   }
 }

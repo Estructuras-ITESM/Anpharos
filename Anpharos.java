@@ -5,8 +5,8 @@ import java.util.*;
 
 public class Anpharos extends JFrame{
 
-  private SpheroSurface drawing = new SpheroSurface();
   private JButton forward, backward, rotate, move, draw, dontdraw, hidesphero, resetsphero, run, save, load, create, clear, graph;
+  private LinkedList<SpheroSurface> drawing = new LinkedList<SpheroSurface>();
   private GridBagConstraints c = new GridBagConstraints();
   private JTextArea code = new JTextArea(10,10);
   private Sphero sphero;
@@ -15,6 +15,8 @@ public class Anpharos extends JFrame{
   private JComboBox select;
   private String [] sph;
   private int currentSphero;
+  private int cenx = 100;
+  private int ceny = 100;
 
   public Anpharos(Usuario usuario){
     this.usuario = usuario;
@@ -123,8 +125,7 @@ public class Anpharos extends JFrame{
     c.gridy = 0;
     c.gridwidth = 5;
     c.gridheight = 10;
-    drawing.setPreferredSize(new Dimension(750,500));
-    add(drawing,c);
+    drawSpheros();
 
     c.gridwidth = 3;
     c.gridheight = 7;
@@ -165,8 +166,8 @@ public class Anpharos extends JFrame{
           int f = Integer.parseInt(JOptionPane.showInputDialog("Distancia a avanzar:"));
           usuario.enqueueInstruction(new Instruction(currentSphero, Command.FORWARD, f));
           code.append("S"+(currentSphero+1)+" <- Forward("+f+"); \n");
-          if(!drawing.tm.isRunning()){
-            drawing.forward(sphero.getAngle(), f);
+          if(!drawing.get(currentSphero).tm.isRunning()){
+            drawing.get(currentSphero).forward(sphero.getAngle(), f);
 //            sphero.forward(100);
           }
           break;
@@ -174,8 +175,8 @@ public class Anpharos extends JFrame{
           int b = Integer.parseInt(JOptionPane.showInputDialog("Distancia a retroceder: "));
           usuario.enqueueInstruction(new Instruction(currentSphero, Command.BACKWARD, b));
           code.append("S"+(currentSphero+1)+" <- Backward("+b+"); \n");
-          if(!drawing.tm.isRunning()){
-            drawing.backward(sphero.getAngle(), b);
+          if(!drawing.get(currentSphero).tm.isRunning()){
+            drawing.get(currentSphero).backward(sphero.getAngle(), b);
 //            sphero.backward(100);
           }
           break;
@@ -183,15 +184,15 @@ public class Anpharos extends JFrame{
           int r = Integer.parseInt(JOptionPane.showInputDialog("Grados a rotar:"));
           usuario.enqueueInstruction(new Instruction(currentSphero, Command.ROTATE, r));
           code.append("S"+(currentSphero+1)+" <- Rotate("+r+"); \n");
-          sphero.rotate(r);
+//          sphero.rotate(r);
           break;
         case "MoveTo":
           int x = Integer.parseInt(JOptionPane.showInputDialog("Coordenada X a moverse"));
           int y = Integer.parseInt(JOptionPane.showInputDialog("Coordenada Y a moverse"));
           usuario.enqueueInstruction(new Instruction(currentSphero, Command.MOVETO, x, y));
           code.append("S"+(currentSphero+1)+" <- Rotate("+x+","+y+"); \n");
-          if(!drawing.tm.isRunning()){
-            drawing.moveTo(x, y);
+          if(!drawing.get(currentSphero).tm.isRunning()){
+            drawing.get(currentSphero).moveTo(x, y);
 //            sphero.moveTo(200,200);
           }
           break;
@@ -206,13 +207,24 @@ public class Anpharos extends JFrame{
         case "HideSphero":
           usuario.enqueueInstruction(new Instruction(currentSphero, Command.HIDESPHERO));
           code.append("S"+(currentSphero+1)+" <- HideSphero(); \n");
-          if(!drawing.tm.isRunning()){
-            drawing.hideSphero();
+          if(!drawing.get(currentSphero).tm.isRunning()){
+            drawing.get(currentSphero).hideSphero();
           }
           break;
         case "ResetSphero":
           usuario.enqueueInstruction(new Instruction(currentSphero, Command.RESETSPHERO));
           code.append("S"+(currentSphero+1)+" <- ResetSphero(); \n");
+          break;
+        case "Create":
+          if(usuario.getList().size() < 5){
+            usuario.addSphero();
+            SpheroSurface ss = new SpheroSurface(cenx, ceny, 0, true);
+            ss.setPreferredSize(new Dimension(750,750));
+            add(ss,c);
+            drawing.add(ss);
+          } else {
+            JOptionPane.showMessageDialog(null, "No se puede tener mas de 5 spheros.");
+          }
           break;
         case "Run":
           break;
@@ -224,12 +236,12 @@ public class Anpharos extends JFrame{
     }
   }
 
+/*
   private class InstantListener implements ActionListener{
     public void actionPerformed(ActionEvent e){
       String command = e.getActionCommand();
       switch(command){
         case "Forward":
-
           if(!drawing.tm.isRunning()){
             drawing.forward(sphero.getAngle(), 100);
             sphero.forward(100);
@@ -247,7 +259,7 @@ public class Anpharos extends JFrame{
         case "MoveTo":
           if(!drawing.tm.isRunning()){
             drawing.moveTo(200, 200);
-//            sphero.moveTo(200,200);
+            //    sphero.moveTo(200,200);
           }
           break;
         case "Draw":
@@ -260,10 +272,20 @@ public class Anpharos extends JFrame{
           }
           break;
         case "ResetSphero":
+          drawing.get(currentSphero) = new SpheroSurface(cenx, ceny, 0, true);
           break;
         case "Graph":
           break;
         case "Create":
+          if(usuario.getList().size() < 5){
+            usuario.addSphero();
+            SpheroSurface ss = new SpheroSurface(cenx, ceny, 0, true);
+            ss.setPreferredSize(new Dimension(750,750));
+            add(ss,c);
+            drawing.add(ss);
+          } else {
+            JOptionPane.showMessageDialog("No se puede tener mas de 5 spheros.");
+          }
           break;
         case "Run":
           break;
@@ -276,6 +298,7 @@ public class Anpharos extends JFrame{
       }
     }
   }
+*/
 
   public void fillArray(){
     int l = 0;
@@ -285,5 +308,13 @@ public class Anpharos extends JFrame{
     }
   }
 
+  public void drawSpheros(){
+    for(Sphero s : usuario.getList()){
+      SpheroSurface ss = new SpheroSurface(s.getX(), s.getY(), s.getAngle(), s.isShown());
+      ss.setPreferredSize(new Dimension(750,750));
+      add(ss,c);
+      drawing.add(ss);
+    }
+  }
 
 }

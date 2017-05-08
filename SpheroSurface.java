@@ -21,6 +21,16 @@ public class SpheroSurface extends JPanel{
  	vel = 1.25;
  	show = true;
   }
+
+  public SpheroSurface(double x, double y, int angle, boolean show){
+  	setSize(750,750);
+ 	this.x = x;
+ 	this.y = y;
+ 	this.angle = angle;
+ 	this.show = show;
+ 	vel = 1.25;
+ 	show = true;
+  }
 /*
   @Override
   public void paint(Graphics g){
@@ -52,7 +62,7 @@ public class SpheroSurface extends JPanel{
   		x = x + (v*Math.cos(Math.toRadians(angle)));
 	    y = y + (v*Math.sin(Math.toRadians(angle)));
 	    repaint();
-	    if((Math.abs(x - xdestin) < 2) && (Math.abs(y - ydestin) < 2)) {
+	    if((Math.abs(x - xdestin) < 3) && (Math.abs(y - ydestin) < 3)) {
 	    	tm.stop();
 	    } 
 	  }
