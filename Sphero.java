@@ -4,12 +4,11 @@ import java.io.*;
 import java.lang.Math;
 
 public class Sphero{
-  private int id, angle;
+  private int angle;
   private double x, y;
   private Image image;
 
-  public Sphero(int id, double x, double y, String spheroImage){
-    this.id = id;
+  public Sphero(double x, double y, String spheroImage){
     this.x = x;
     this.y = y;
     this.angle = 0;
