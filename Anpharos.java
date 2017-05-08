@@ -14,10 +14,12 @@ public class Anpharos extends JFrame{
   private Usuario usuario;
   private JComboBox select;
   private String [] sph;
+  private int currentSphero;
 
   public Anpharos(Usuario usuario){
     this.usuario = usuario;
     sphero = usuario.getSphero(0);
+    currentSphero = 0;
     setTitle("Anpharos");
     setSize(1500,1000);
     setLayout(new GridBagLayout());
@@ -146,6 +148,74 @@ public class Anpharos extends JFrame{
       String command = e.getActionCommand();
       switch(command){
         case "Forward":
+          int f = Integer.parseInt(JOptionPane.showInputDialog("Distancia a avanzar:"));
+          usuario.enqueueInstruction(new Instruction(currentSphero, Command.FORWARD, f));
+          code.append("S"+(currentSphero+1)+" <- Forward("+f+"); \n");
+          if(!drawing.tm.isRunning()){
+            drawing.forward(sphero.getAngle(), f);
+//            sphero.forward(100);
+          }
+          break;
+        case "Backward":
+          int b = Integer.parseInt(JOptionPane.showInputDialog("Distancia a retroceder: "));
+          usuario.enqueueInstruction(new Instruction(currentSphero, Command.BACKWARD, b));
+          code.append("S"+(currentSphero+1)+" <- Backward("+b+"); \n");
+          if(!drawing.tm.isRunning()){
+            drawing.backward(sphero.getAngle(), b);
+//            sphero.backward(100);
+          }
+          break;
+        case "Rotate":
+          int r = Integer.parseInt(JOptionPane.showInputDialog("Grados a rotar:"));
+          usuario.enqueueInstruction(new Instruction(currentSphero, Command.ROTATE, r));
+          code.append("S"+(currentSphero+1)+" <- Rotate("+r+"); \n");
+          sphero.rotate(r);
+          break;
+        case "MoveTo":
+          int x = Integer.parseInt(JOptionPane.showInputDialog("Coordenada X a moverse"));
+          int y = Integer.parseInt(JOptionPane.showInputDialog("Coordenada Y a moverse"));
+          usuario.enqueueInstruction(new Instruction(currentSphero, Command.MOVETO, x, y));
+          code.append("S"+(currentSphero+1)+" <- Rotate("+x+","+y+"); \n");
+          if(!drawing.tm.isRunning()){
+            drawing.moveTo(x, y);
+//            sphero.moveTo(200,200);
+          }
+          break;
+        case "Draw":
+          usuario.enqueueInstruction(new Instruction(currentSphero, Command.DRAW));
+          code.append("S"+(currentSphero+1)+" <- Draw(); \n");
+          break;
+        case "DontDraw":
+          usuario.enqueueInstruction(new Instruction(currentSphero, Command.DONTDRAW));
+          code.append("S"+(currentSphero+1)+" <- DontDraw(); \n");
+          break;
+        case "HideSphero":
+          usuario.enqueueInstruction(new Instruction(currentSphero, Command.HIDESPHERO));
+          code.append("S"+(currentSphero+1)+" <- HideSphero(); \n");
+          if(!drawing.tm.isRunning()){
+            drawing.hideSphero();
+          }
+          break;
+        case "ResetSphero":
+          usuario.enqueueInstruction(new Instruction(currentSphero, Command.RESETSPHERO));
+          code.append("S"+(currentSphero+1)+" <- ResetSphero(); \n");
+          break;
+        case "Run":
+          break;
+        case "Save":
+          break;
+        case "Load":
+          break;
+      }
+    }
+  }
+
+  private class InstantListener implements ActionListener{
+    public void actionPerformed(ActionEvent e){
+      String command = e.getActionCommand();
+      switch(command){
+        case "Forward":
+
           if(!drawing.tm.isRunning()){
             drawing.forward(sphero.getAngle(), 100);
             sphero.forward(100);

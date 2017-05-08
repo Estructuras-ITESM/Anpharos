@@ -1,16 +1,13 @@
-import java.util.*;
-import java.io.*;
+import java.io.Serializable;
 
 public class Usuario implements Serializable{
   private String nombre, contrasena;
-  private LinkedList<Sphero> spheros;
-
+  private Program program;
 
   public Usuario(String nombre, String contrasena){
     this.nombre = nombre;
     this.contrasena = contrasena;
-    spheros = new LinkedList<Sphero>();
-    spheros.add(new Sphero(100,100,""));
+    program = new Program();
   }
 
   public String getNombre(){
@@ -30,14 +27,11 @@ public class Usuario implements Serializable{
   }
 
   public Sphero getSphero(int i){
-    return spheros.get(i);
+    return program.getSpheroList().get(i);
   }
 
-  public void setSphero(Sphero sphero){
-    spheros.add(sphero);
+  public void enqueueInstruction(Instruction instruction){
+    program.getInstructionQueue().enqueue(instruction);
   }
 
-  public LinkedList<Sphero> getList(){
-    return spheros;
-  }
 } 

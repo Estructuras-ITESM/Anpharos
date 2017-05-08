@@ -29,18 +29,22 @@ public class SpheroSurface extends JPanel{
   }
 */
   public void paintComponent(Graphics g){
-  	super.paintComponent(g);
+  	
+	super.paintComponent(g);
+  	if(show){
 
-  	int ix = (int) x;
-  	int iy = (int) y;
+	  	int ix = (int) x;
+	  	int iy = (int) y;
 
-  	int idx = (int) xdestin;
-  	int idy = (int) ydestin;
+	  	int idx = (int) xdestin;
+	  	int idy = (int) ydestin;
 
-  	g.setColor(Color.RED);
-  	g.fillOval(ix, iy, 40, 40);
-  	g.setColor(Color.BLUE);
-  	g.fillOval(idx, idy, 40, 40);
+	  	g.setColor(Color.RED);
+	  	g.fillOval(ix, iy, 40, 40);
+	  	g.setColor(Color.BLUE);
+	  	g.fillOval(idx, idy, 40, 40);
+  	}
+
 
   }
   private class timerListener implements ActionListener{
@@ -48,7 +52,7 @@ public class SpheroSurface extends JPanel{
   		x = x + (v*Math.cos(Math.toRadians(angle)));
 	    y = y + (v*Math.sin(Math.toRadians(angle)));
 	    repaint();
-	    if((Math.abs(x - xdestin) < 1) && (Math.abs(y - ydestin) < 1)) {
+	    if((Math.abs(x - xdestin) < 2) && (Math.abs(y - ydestin) < 2)) {
 	    	tm.stop();
 	    } 
 	  }
@@ -97,5 +101,6 @@ public class SpheroSurface extends JPanel{
 
   public void hideSphero(){
   	show = !show;
+  	repaint();
   }
 }
