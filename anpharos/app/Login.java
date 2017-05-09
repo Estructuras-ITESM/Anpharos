@@ -1,15 +1,14 @@
-package  anpharos.app;
+package anpharos.app;
 
 import javax.swing.*;
 import java.util.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.io.*;
-import anpharos.sphero.Sphero;
-import anpharos.gui.Anpharos;
-import anpharos.structures.Queue;
 
-public class Login extends JFrame implements ActionListener{
+import anpharos.gui.Anpharos;
+
+public class Login extends JFrame implements ActionListener, Serializable{
 
     private Hashtable<Integer,Usuario> usuarios;
     private JLabel usuario, contrasena;
@@ -28,7 +27,7 @@ public class Login extends JFrame implements ActionListener{
     }
 
     public void initComponents(GridBagConstraints c){
-        usuario = new JLabel("Usuario: ");
+        usuario = new JLabel("anpharos.app.Usuario: ");
         contrasena = new JLabel("Contraseña: ");
         u = new JTextField(6);
         co = new JTextField(6);
@@ -68,21 +67,24 @@ public class Login extends JFrame implements ActionListener{
     public void actionPerformed(ActionEvent e){
         String nombre = u.getText();
         String contra = co.getText();
-        String code = nombre+contra;
-        int hash = code.hashCode();
+        int hash = nombre.hashCode();
         if ("entrar".equals(e.getActionCommand())) {
             if (usuarios.get(hash) != null) {
                 Usuario u = usuarios.get(hash);
-                Anpharos a = new Anpharos(u);
+                if (u.getContrasena().equals(contra)) {
+                Anpharos a = new Anpharos(u,usuarios);
                 dispose();
+                }else{
+                    JOptionPane.showMessageDialog(null, "Contraseña incorrecta");
+                }
             }else{
-                JOptionPane.showMessageDialog(null, "Credenciales incorrectas o usuario inexistente");
+                JOptionPane.showMessageDialog(null, "anpharos.app.Usuario incorrecto o inexistente");
             }
         }else if ("registrarse".equals(e.getActionCommand())) {
             if (usuarios.get(hash) == null) {
                 Usuario u = new Usuario(nombre, contra);
                 usuarios.put(hash,u);
-                Anpharos a = new Anpharos(u);
+                Anpharos a = new Anpharos(u,usuarios);
                 JOptionPane.showMessageDialog(null, "Tu cuenta ha sido creada");
                 dispose();
             }else{
@@ -90,4 +92,27 @@ public class Login extends JFrame implements ActionListener{
             }
         }
     }
+
+    public static void main(String[] args) {
+        /*Hashtable<Integer,anpharos.app.Usuario> hash = new Hashtable<Integer,anpharos.app.Usuario>();
+        Login l = new Login(hash);*/
+        try{
+          FileInputStream fis = new FileInputStream("UsuarioBD.sph");
+          ObjectInputStream ois = new ObjectInputStream(fis);
+          Hashtable<Integer,Usuario> hashTable = (Hashtable<Integer,Usuario>) ois.readObject();
+          ois.close();
+          fis.close();
+          Login l = new Login(hashTable);
+        }catch(IOException i){
+          JOptionPane.showMessageDialog(null, "ERROR: No existe el archivo");
+          Hashtable<Integer,Usuario> ht = new Hashtable<Integer,Usuario>();
+          String n = "Hola2";
+          String contr = "hOla1";
+          ht.put(n.hashCode(), new Usuario(n, contr));
+          Login l = new Login(ht);
+        }catch(ClassNotFoundException c){
+          c.printStackTrace();
+        }
+    }
+
 }
