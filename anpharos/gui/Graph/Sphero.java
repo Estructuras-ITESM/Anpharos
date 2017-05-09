@@ -29,12 +29,20 @@ public class Sphero {
         img = parent.loadImage(location, "png");
         this.multiplier = multiplier;
         this.nodes = nodes;
+        putTo(nodes.get("Barcelona"));
     }
 
     public void moveTo(GraphNode node){
     }
 
+    public void putTo(GraphNode node){
+        location = new PVector(node.getXPos(), node.getYPos());
+    }
+
     void draw(){
-        parent.image(img,parent.width/2, parent.height/2, 50*multiplier,50*multiplier);
+        parent.pushMatrix();
+        parent.translate(multiplier*location.x, multiplier*location.y);
+        parent.image(img,-50, -50, 50*multiplier,50*multiplier); //¿Por qué no necesita multiplier? Misterios del universo
+        parent.popMatrix();
     }
 }

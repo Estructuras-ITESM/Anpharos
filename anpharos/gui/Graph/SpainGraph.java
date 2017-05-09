@@ -79,7 +79,7 @@ public class SpainGraph {
     }
 
     public void draw() {
-        //parent.image(img, 2 * 20 * multiplier, 2 * 20 * multiplier, parent.width - 20 * multiplier, parent.height - 20 * multiplier);
+        parent.image(img, 2 * 20 * multiplier, 2 * 20 * multiplier, parent.width - 20 * multiplier, parent.height - 20 * multiplier);
         for (String node : nodes.keySet()) {
             nodes.get(node).draw();
         }
