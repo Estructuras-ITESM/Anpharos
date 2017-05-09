@@ -9,6 +9,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.util.*;
+import java.io.*;
 
 public class Anpharos extends JFrame{
 
@@ -32,9 +33,16 @@ public class Anpharos extends JFrame{
     sphero = usuario.getSphero(0);
     currentSphero = 0;
     setTitle("Anpharos");
-    setSize(1200,550);
+    setSize(1200,1000);
     setLayout(new GridBagLayout());
     setDefaultCloseOperation(EXIT_ON_CLOSE);
+    addWindowListener(new java.awt.event.WindowAdapter() {
+      public void windowClosing(java.awt.event.WindowEvent windowEvent) {
+          usuarios.remove(usuario.getNombre().hashCode());
+          usuarios.put(usuario.getNombre().hashCode(),usuario);
+          serialize(usuarios);
+        }
+    });
     sph = new String[usuario.getList().size()];
     fillArray();
     initComponents();
@@ -315,6 +323,20 @@ public class Anpharos extends JFrame{
       sph[l] = "Sphero - "+(l+1);
       l++;
     }
+  }
+
+  public void serialize(Hashtable<Integer,Usuario> usuarios){
+      try {
+          FileOutputStream fileOut =   new FileOutputStream("UsuarioBD.sph");
+          ObjectOutputStream out = new ObjectOutputStream(fileOut);
+          out.writeObject(usuarios);
+          out.close();
+          fileOut.close();
+          System.out.println("PUTA MADRE");
+      }catch(IOException i) {
+          i.printStackTrace();
+          System.out.println("SEAS MAMON");
+      }
   }
 
   public void drawSpheros(){
