@@ -1,7 +1,13 @@
 package anpharos.gui.Graph;
 
+import anpharos.structures.Graph.BFS;
+import anpharos.structures.Graph.DFS;
+import anpharos.structures.Graph.Dijkstra;
+import anpharos.structures.Graph.GraphNode;
 import processing.core.PApplet;
 import controlP5.*;
+
+import java.util.ArrayList;
 
 /**
  * Created on 5/7/17.
