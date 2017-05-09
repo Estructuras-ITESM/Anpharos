@@ -15,7 +15,7 @@ public class Login extends JFrame implements ActionListener, Serializable{
     private JButton registrarse, entrar;
     private JTextField u, co;
 
-    public Login(Hashtable hashtable){
+    public Login(Hashtable hashtable) {
         usuarios = hashtable;
         setTitle("Registro");
         setSize(300,100);

@@ -6,6 +6,8 @@ import anpharos.sphero.Sphero;
 import java.util.*;
 import java.io.*;
 
+import anpharos.structures.Queue;
+
 public class Program implements Serializable{
 
 	private Queue<Instruction> instructionQueue;
