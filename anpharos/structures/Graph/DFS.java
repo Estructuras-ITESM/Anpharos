@@ -37,8 +37,27 @@ public class DFS {
         return trace;
     }
 
+    public static ArrayList<GraphNode> trace(WeightedDigraph graph, String source){
+        boolean[] visited = new boolean[graph.size];
+        ArrayList<GraphNode> trace = new ArrayList<>();
+        Stack<GraphNode> stack = new Stack<>();
+        stack.push(graph.getNodeRef(source));
+        visited[graph.getNodePosition(source)] = true;
+        while(!stack.isEmpty()) {
+            GraphNode popped = stack.pop();
+            trace.add(popped);
+            for (Edge e: graph.adjList.get(popped)) {
+                if(!visited[graph.getNodePosition(e.to)]) {
+                    stack.push(e.to);
+                    visited[graph.getNodePosition(e.to)] = true;
+                }
+            }
+        }
+        return trace;
+    }
+
     public static void main(String[] args) {
-ArrayList<String> nodes = new ArrayList<>();
+        ArrayList<String> nodes = new ArrayList<>();
         nodes.add("0");
         nodes.add("1");
         nodes.add("2");

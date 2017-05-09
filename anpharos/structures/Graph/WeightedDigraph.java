@@ -38,7 +38,7 @@ public class WeightedDigraph {
     public void addNodeRelationship(String origin, String destination, int weight) {
         GraphNode tmpOrigin = nodeName.get(origin);
         GraphNode tmpDestination = nodeName.get(destination);
-        System.out.println("Origin "  + tmpOrigin + " Destination " + tmpDestination);
+        //System.out.println("Origin "  + tmpOrigin + " Destination " + tmpDestination);
         if (adjList.containsKey(tmpOrigin)) {
             ArrayList<Edge> tmpOriginAdj = adjList.get(tmpOrigin);
             tmpOriginAdj.add(new Edge(tmpOrigin, tmpDestination, weight));

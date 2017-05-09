@@ -50,7 +50,7 @@ public class BFS {
         while (!queue.isEmpty()) {
             GraphNode dequeued = queue.dequeue();
             trace.add(dequeued);
-            System.out.println("Visited:" +dequeued);
+            //System.out.println("Visited:" +dequeued);
             for (Edge e : graph.adjList.get(dequeued)) {
                 if (!visited[graph.getNodePosition(e.to)]) {
                     queue.enqueue(e.to);
@@ -91,6 +91,8 @@ public class BFS {
 
         BFS tmpBFS = new BFS(tmp);
         tmpBFS.trace("0");
+        System.out.println("End");
+        BFS.trace(tmp, "0");
         System.out.println("End");
     }
 }

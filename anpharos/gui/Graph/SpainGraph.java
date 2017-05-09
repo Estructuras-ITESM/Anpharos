@@ -1,5 +1,6 @@
 package anpharos.gui.Graph;
 
+import anpharos.structures.Graph.GraphNode;
 import anpharos.structures.Graph.WeightedDigraph;
 import processing.core.PApplet;
 import processing.core.PImage;
@@ -30,6 +31,7 @@ public class SpainGraph {
         graph = new WeightedDigraph(cities);
         setGuiNodes();
         setGuiEdges();
+        setGraphEdges();
     }
 
     public ArrayList<String> setStringNodes() {
@@ -37,12 +39,12 @@ public class SpainGraph {
         tmp.add("Albacete");//Albacete
         tmp.add("Badajoz");//Badajoz
         tmp.add("Barcelona");//Barcelona
-        tmp.add("Coruña");//Coruña
-        tmp.add("Cádiz");//Cadiz
+        tmp.add("Coruna");//Coruna
+        tmp.add("Cadiz");//Cadiz
         tmp.add("Oviedo");//Oviedo
         tmp.add("Gerona");//Gerona
         tmp.add("Granada");//Granada
-        tmp.add("Jaén");//Jaen
+        tmp.add("Jaen");//Jaen
         tmp.add("Madrid");//Madrid
         tmp.add("Murcia");//Murcia
         tmp.add("Bilbao");//Bilbao
@@ -59,23 +61,28 @@ public class SpainGraph {
     }
 
     public WeightedDigraph getGraph() {
+        System.out.println();
         return this.graph;
     }
 
     public boolean contains(String city){
-        return 
+        return nodes.containsKey(city);
+    }
+
+    public GraphNodeGui getGraphGuiNode(GraphNode node){
+        return nodes.get(node.getName());
     }
 
     public void setGuiNodes() {
         nodes.put("Albacete", new GraphNodeGui(parent, 352, 409, multiplier));//Albacete
         nodes.put("Badajoz", new GraphNodeGui(parent, 160, 419, multiplier));//Badajoz
         nodes.put("Barcelona", new GraphNodeGui(parent, 484, 233, multiplier));//Barcelona
-        nodes.put("Coruña", new GraphNodeGui(parent, 127, 86, multiplier));//Coruña
-        nodes.put("Cádiz", new GraphNodeGui(parent, 173, 584, multiplier));//Cadiz
+        nodes.put("Coruna", new GraphNodeGui(parent, 127, 86, multiplier));//Coruna
+        nodes.put("Cadiz", new GraphNodeGui(parent, 173, 584, multiplier));//Cadiz
         nodes.put("Oviedo", new GraphNodeGui(parent, 218, 85, multiplier));//Oviedo
         nodes.put("Gerona", new GraphNodeGui(parent, 524, 172, multiplier));//Gerona
         nodes.put("Granada", new GraphNodeGui(parent, 288, 555, multiplier));//Granada
-        nodes.put("Jaén", new GraphNodeGui(parent, 266, 463, multiplier));//Jaen
+        nodes.put("Jaen", new GraphNodeGui(parent, 266, 463, multiplier));//Jaen
         nodes.put("Madrid", new GraphNodeGui(parent, 287, 308, multiplier));//Madrid
         nodes.put("Murcia", new GraphNodeGui(parent, 381, 495, multiplier));//Murcia
         nodes.put("Bilbao", new GraphNodeGui(parent, 320, 90, multiplier));//Bilbao
@@ -97,14 +104,14 @@ public class SpainGraph {
         graph.addBinaryNodeRelationShip("Bilbao", "Oviedo", 304);
         graph.addBinaryNodeRelationShip("Bilbao", "Valladolid", 280);
         graph.addBinaryNodeRelationShip("Bilbao", "Zaragoza", 324);
-        graph.addBinaryNodeRelationShip("Cádiz", "Sevilla", 125);
-        graph.addBinaryNodeRelationShip("Coruña", "Valladolid", 455);
-        graph.addBinaryNodeRelationShip("Coruña", "Vigo", 171);
-        graph.addBinaryNodeRelationShip("Granada","Jaén", 99);
+        graph.addBinaryNodeRelationShip("Cadiz", "Sevilla", 125);
+        graph.addBinaryNodeRelationShip("Coruna", "Valladolid", 455);
+        graph.addBinaryNodeRelationShip("Coruna", "Vigo", 171);
+        graph.addBinaryNodeRelationShip("Granada","Jaen", 99);
         graph.addBinaryNodeRelationShip("Granada","Murcia", 278);
         graph.addBinaryNodeRelationShip("Granada","Sevilla", 256);
-        graph.addBinaryNodeRelationShip("Jaén", "Madrid", 335);
-        graph.addBinaryNodeRelationShip("Jaén", "Sevilla", 242);
+        graph.addBinaryNodeRelationShip("Jaen", "Madrid", 335);
+        graph.addBinaryNodeRelationShip("Jaen", "Sevilla", 242);
         graph.addBinaryNodeRelationShip("Madrid", "Valladolid", 193);
         graph.addBinaryNodeRelationShip("Madrid", "Zaragoza", 325);
         graph.addBinaryNodeRelationShip("Murcia", "Valencia", 241);
@@ -123,14 +130,14 @@ public class SpainGraph {
         edges.add(new GraphEdgeGui(parent, nodes.get("Bilbao"), nodes.get("Oviedo"), multiplier));
         edges.add(new GraphEdgeGui(parent, nodes.get("Bilbao"), nodes.get("Valladolid"), multiplier));
         edges.add(new GraphEdgeGui(parent, nodes.get("Bilbao"), nodes.get("Zaragoza"), multiplier));
-        edges.add(new GraphEdgeGui(parent, nodes.get("Cádiz"), nodes.get("Sevilla"), multiplier));
-        edges.add(new GraphEdgeGui(parent, nodes.get("Coruña"), nodes.get("Valladolid"), multiplier));
-        edges.add(new GraphEdgeGui(parent, nodes.get("Coruña"), nodes.get("Vigo"), multiplier));
-        edges.add(new GraphEdgeGui(parent, nodes.get("Granada"), nodes.get("Jaén"), multiplier));
+        edges.add(new GraphEdgeGui(parent, nodes.get("Cadiz"), nodes.get("Sevilla"), multiplier));
+        edges.add(new GraphEdgeGui(parent, nodes.get("Coruna"), nodes.get("Valladolid"), multiplier));
+        edges.add(new GraphEdgeGui(parent, nodes.get("Coruna"), nodes.get("Vigo"), multiplier));
+        edges.add(new GraphEdgeGui(parent, nodes.get("Granada"), nodes.get("Jaen"), multiplier));
         edges.add(new GraphEdgeGui(parent, nodes.get("Granada"), nodes.get("Murcia"), multiplier));
         edges.add(new GraphEdgeGui(parent, nodes.get("Granada"), nodes.get("Sevilla"), multiplier));
-        edges.add(new GraphEdgeGui(parent, nodes.get("Jaén"), nodes.get("Madrid"), multiplier));
-        edges.add(new GraphEdgeGui(parent, nodes.get("Jaén"), nodes.get("Sevilla"), multiplier));
+        edges.add(new GraphEdgeGui(parent, nodes.get("Jaen"), nodes.get("Madrid"), multiplier));
+        edges.add(new GraphEdgeGui(parent, nodes.get("Jaen"), nodes.get("Sevilla"), multiplier));
         edges.add(new GraphEdgeGui(parent, nodes.get("Madrid"), nodes.get("Valladolid"), multiplier));
         edges.add(new GraphEdgeGui(parent, nodes.get("Madrid"), nodes.get("Zaragoza"), multiplier));
         edges.add(new GraphEdgeGui(parent, nodes.get("Murcia"), nodes.get("Valencia"), multiplier));
