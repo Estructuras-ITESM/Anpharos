@@ -11,7 +11,7 @@ public class GraphParent extends PApplet{
     Button dijkstra, dfs, bfs;
     Sphero sphero;
     SpainGraph spainGraph;
-    int multiplier = 2;
+    int multiplier = 1;
     public void settings() {
         size(multiplier*600,multiplier*600);
     }

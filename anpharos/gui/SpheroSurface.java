@@ -63,8 +63,8 @@ public class SpheroSurface extends JPanel{
 
 	  	g.setColor(Color.RED);
 	  	boolean what = g.drawImage(image, ix, iy, null);
-	  	g.setColor(Color.BLUE);
-	  	g.fillOval(idx, idy, 40, 40);
+//	  	g.setColor(Color.BLUE);
+//	  	g.fillOval(idx, idy, 40, 40);
   	}
 
 
@@ -73,6 +73,18 @@ public class SpheroSurface extends JPanel{
 	  public void actionPerformed(ActionEvent e){
   		x = x + (v*Math.cos(Math.toRadians(angle)));
 	    y = y + (v*Math.sin(Math.toRadians(angle)));
+      if(x < 0){
+        x = 0;
+      }
+      if(x > 700){
+        x = 700;
+      }
+      if(y < 0){
+        y = 0;
+      }
+      if(y > 700){
+        y = 700;
+      }
 	    repaint();
 	    if((Math.abs(x - xdestin) < 3) && (Math.abs(y - ydestin) < 3)) {
 	    	tm.stop();
@@ -94,7 +106,9 @@ public class SpheroSurface extends JPanel{
     	v = vel;
     	xdestin = x + (distance*Math.cos(Math.toRadians(angle)));
     	ydestin = y + (distance*Math.sin(Math.toRadians(angle)));
-    	this.start();
+      checkEdges();
+      this.start();
+      boolean running = tm.isRunning();
     }
   }
 
@@ -105,14 +119,16 @@ public class SpheroSurface extends JPanel{
     	v = -vel;
     	xdestin = x - (distance*Math.cos(Math.toRadians(angle)));
     	ydestin = y - (distance*Math.sin(Math.toRadians(angle)));
-    	this.start();
+    	checkEdges();
+      this.start();
+      boolean running = tm.isRunning();
     }
   }
 
-  public void moveTo(double dx, double dy){
+  public void moveTo(int dx, int dy){
     synchronized(lock){
-    	double co = dy - y;
-    	double ca = dx - x;
+    	int co = (int) (dy - y);
+    	int ca = (int) (dx - x);
     	System.out.println(co);
     	System.out.println(ca);
     	angle = (int) Math.toDegrees(Math.atan(co/ca));
@@ -123,6 +139,7 @@ public class SpheroSurface extends JPanel{
     	v = vel;
     	xdestin = dx;
     	ydestin = dy;
+      checkEdges();
     	this.start();
     }
   }
@@ -132,5 +149,29 @@ public class SpheroSurface extends JPanel{
     	show = !show;
     	repaint();
     }
+  }
+
+  public void resetSphero(double x, double y){
+    synchronized(lock){
+      this.x = x;
+      this.y = y;
+      show = true;
+      repaint();
+    }
+  }
+
+  private void checkEdges(){
+    if(xdestin < 0){
+        xdestin = 0;
+      }
+      if(xdestin > 700){
+        xdestin = 700;
+      }
+      if(ydestin < 0){
+        ydestin = 0;
+      }
+      if(ydestin > 700){
+        ydestin = 700;
+      }
   }
 }

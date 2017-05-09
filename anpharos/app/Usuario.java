@@ -69,4 +69,8 @@ public class Usuario implements Serializable{
     program.setInstructionQueue(instructions);
   }
 
+  public void clearQueue(){
+    program.getInstructionQueue().clear();
+  }
+
 } 

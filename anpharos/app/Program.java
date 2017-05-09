@@ -16,8 +16,7 @@ public class Program implements Serializable{
 	public Program(){
 		instructionQueue = new Queue<Instruction>();
 		spheroList = new LinkedList<Sphero>();
-		spheroList.add(new Sphero(100, 100, ""));
-		spheroList.add(new Sphero(100, 100, ""));
+		spheroList.add(new Sphero(50, 50, ""));
 	}
 
 	public Queue<Instruction> getInstructionQueue(){

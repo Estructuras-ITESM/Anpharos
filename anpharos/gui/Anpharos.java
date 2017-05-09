@@ -27,8 +27,8 @@ public class Anpharos extends JFrame{
   private JComboBox select;
   private String [] sph;
   private int currentSphero;
-  private int cenx = 100;
-  private int ceny = 100;
+  private int cenx = 50;
+  private int ceny = 50;
   private Hashtable<Integer,Usuario> usuarios;
   private JFileChooser chooser = new JFileChooser();
   private FileNameExtensionFilter filter = new FileNameExtensionFilter(
@@ -93,12 +93,14 @@ public class Anpharos extends JFrame{
     draw = new JButton("Draw");
     draw.setActionCommand("Draw");
     draw.addActionListener(new QueueListener());
+    draw.setEnabled(false);
     add(draw,c);
 
     c.gridx = 1;
     dontdraw = new JButton("DontDraw");
     dontdraw.setActionCommand("DontDraw");
     dontdraw.addActionListener(new QueueListener());
+    dontdraw.setEnabled(false);
     add(dontdraw,c);
 
     c.gridwidth = 2;
@@ -219,19 +221,19 @@ public class Anpharos extends JFrame{
           usuario.enqueueInstruction(new Instruction(currentSphero, Command.ROTATE, r));
           code.append("S"+(currentSphero+1)+" <- Rotate("+r+"); \n");
 //          sphero.rotate(r);
-          usuario.getSphero(currentSphero).rotate(r);
+//          usuario.getSphero(currentSphero).rotate(r);
           break;
         case "MoveTo":
           int x = Integer.parseInt(JOptionPane.showInputDialog("Coordenada X a moverse"));
           int y = Integer.parseInt(JOptionPane.showInputDialog("Coordenada Y a moverse"));
           usuario.enqueueInstruction(new Instruction(currentSphero, Command.MOVETO, x, y));
-          code.append("S"+(currentSphero+1)+" <- Rotate("+x+","+y+"); \n");
-          if(!drawing.get(currentSphero).tm.isRunning()){
+          code.append("S"+(currentSphero+1)+" <- MoveTo("+x+","+y+"); \n");
+/*          if(!drawing.get(currentSphero).tm.isRunning()){
             drawing.get(currentSphero).moveTo(x, y);
 //            sphero.moveTo(200,200);
           }
           usuario.getSphero(currentSphero).moveTo(x,y);
-          break;
+*/          break;
         case "Draw":
           usuario.enqueueInstruction(new Instruction(currentSphero, Command.DRAW));
           code.append("S"+(currentSphero+1)+" <- Draw(); \n");
@@ -243,10 +245,10 @@ public class Anpharos extends JFrame{
         case "HideSphero":
           usuario.enqueueInstruction(new Instruction(currentSphero, Command.HIDESPHERO));
           code.append("S"+(currentSphero+1)+" <- HideSphero(); \n");
-          if(!drawing.get(currentSphero).tm.isRunning()){
+/*          if(!drawing.get(currentSphero).tm.isRunning()){
             drawing.get(currentSphero).hideSphero();
           }
-          break;
+*/          break;
         case "ResetSphero":
           usuario.enqueueInstruction(new Instruction(currentSphero, Command.RESETSPHERO));
           code.append("S"+(currentSphero+1)+" <- ResetSphero(); \n");
@@ -272,25 +274,39 @@ public class Anpharos extends JFrame{
           break;
         case "Run":
           Queue<Instruction> tempQueue = new Queue<Instruction>();
+          drawing.get(currentSphero).resetSphero(cenx,ceny);
+          usuario.getSphero(currentSphero).moveTo(cenx, ceny);
+          usuario.getSphero(currentSphero).setShow(true);
           Instruction ins = new Instruction(0, Command.FORWARD);
           while(!usuario.getInstructionQueue().isEmpty()){
-            System.out.println("queue not empty");
             ins = usuario.dequeueInstruction();
             String com = ins.toString();
             System.out.println(com);
             switch(com){
               case "FORWARD":
-                if(!drawing.get(ins.getId()).tm.isRunning()){
-                  drawing.get(ins.getId()).forward(sphero.getAngle(), ins.getInput1());
-                  usuario.getSphero(currentSphero).forward(ins.getInput1());
-                }
+                drawing.get(ins.getId()).forward(sphero.getAngle(), ins.getInput1());
+                usuario.getSphero(currentSphero).forward(ins.getInput1());
+                System.out.println("Success FORWARD");
                 break;
               case "BACKWARD":
-                if(!drawing.get(ins.getId()).tm.isRunning()){
-                  drawing.get(ins.getId()).backward(sphero.getAngle(), ins.getInput1());
-                  usuario.getSphero(currentSphero).backward(ins.getInput1());
-                }
-                
+                drawing.get(ins.getId()).backward(sphero.getAngle(), ins.getInput1());
+                usuario.getSphero(currentSphero).backward(ins.getInput1());
+                System.out.println("Success BACKWARD");
+                break;
+              case "ROTATE":
+                usuario.getSphero(currentSphero).rotate(ins.getInput1());
+                break;
+              case "MOVETO":
+                drawing.get(ins.getId()).moveTo(ins.getInput1(), ins.getInput2());
+                usuario.getSphero(currentSphero).moveTo(ins.getInput1(), ins.getInput2());
+                break;
+              case "HIDESPHERO":
+                drawing.get(ins.getId()).hideSphero();
+                usuario.getSphero(currentSphero).hideSphero();
+                break;
+              case "RESETSPHERO":
+                drawing.get(currentSphero).resetSphero(cenx,ceny);
+                usuario.getSphero(currentSphero).moveTo(cenx, ceny);
                 break;
             }
             tempQueue.enqueue(ins);
@@ -312,6 +328,12 @@ public class Anpharos extends JFrame{
             drawSpheros();
           }
           break;
+        case "Clear":
+          usuario.clearQueue();
+          code.setText("");
+          drawing.get(currentSphero).resetSphero(cenx,ceny);
+          usuario.getSphero(currentSphero).moveTo(cenx, ceny);
+          usuario.getSphero(currentSphero).setShow(true);
       }
     }
   }
