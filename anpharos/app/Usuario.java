@@ -48,4 +48,12 @@ public class Usuario implements Serializable{
     program.getSpheroList().add(new Sphero(100, 100, ""));
   }
 
+  public Program getProgram(){
+    return program;
+  }
+
+  public void setProgram(Program program){
+    this.program = program;
+  }
+
 } 

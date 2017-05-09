@@ -196,7 +196,7 @@ public class Anpharos extends JFrame{
           code.append("S"+(currentSphero+1)+" <- Forward("+f+"); \n");
           if(!drawing.get(currentSphero).tm.isRunning()){
             drawing.get(currentSphero).forward(sphero.getAngle(), f);
-//            sphero.forward(100);
+            sphero.forward(100);
           }
           break;
         case "Backward":
@@ -205,7 +205,7 @@ public class Anpharos extends JFrame{
           code.append("S"+(currentSphero+1)+" <- Backward("+b+"); \n");
           if(!drawing.get(currentSphero).tm.isRunning()){
             drawing.get(currentSphero).backward(sphero.getAngle(), b);
-//            sphero.backward(100);
+            sphero.backward(100);
           }
           break;
         case "Rotate":
@@ -261,13 +261,19 @@ public class Anpharos extends JFrame{
         case "Run":
           break;
         case "Save":
-          int ans = chooser.showSaveDialog(null);
-          if (ans == JFileChooser.APPROVE_OPTION) {
+          int s = chooser.showSaveDialog(null);
+          if (s == JFileChooser.APPROVE_OPTION) {
             String doc = chooser.getSelectedFile().getName();
+            serialize(usuario.getProgram(),doc);
           }
           break;
         case "Load":
-          chooser.showOpenDialog(null);
+          int l = chooser.showOpenDialog(null);
+          if (l == JFileChooser.APPROVE_OPTION) {
+            String doc = chooser.getSelectedFile().getName();
+            loadFile(doc);
+            drawSpheros();
+          }
           break;
       }
     }
@@ -366,7 +372,24 @@ public class Anpharos extends JFrame{
           fileOut.close();
       }catch(IOException i) {
           i.printStackTrace();
+          JOptionPane.showMessageDialog(null, "No se pudo guardar el archivo");
       }
+  }
+
+  public void loadFile(String file){
+    try{
+          FileInputStream fis = new FileInputStream(file);
+          ObjectInputStream ois = new ObjectInputStream(fis);
+          Program p = (Program) ois.readObject();
+          ois.close();
+          fis.close();
+          usuario.setProgram(p);
+          JOptionPane.showMessageDialog(null, "Archivo cargado");
+        }catch(IOException i){
+          JOptionPane.showMessageDialog(null, "ERROR: No existe el archivo");
+        }catch(ClassNotFoundException c){
+          c.printStackTrace();
+        }
   }
 
   public void drawSpheros(){

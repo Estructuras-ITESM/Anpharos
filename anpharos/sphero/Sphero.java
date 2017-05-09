@@ -29,7 +29,6 @@ public class Sphero implements Serializable{
   }
 
   public void forward(int distance){
-    System.out.println("ha");
     int d = 0;
     while(d < distance){
       x = x + Math.cos(angle);
