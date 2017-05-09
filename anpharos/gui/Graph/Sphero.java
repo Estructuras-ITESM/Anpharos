@@ -14,7 +14,7 @@ public class Sphero {
     PApplet parent;
     PImage img;
     int multiplier;
-    Map<String, GraphNode> nodes;
+    Map<String, GraphNodeGui> nodes;
 
     float maxForce;
     float maxSpeed;
@@ -23,7 +23,7 @@ public class Sphero {
     PVector acceleration;
 
 
-    Sphero(PApplet parent, int multiplier, Map<String, GraphNode> nodes) {
+    Sphero(PApplet parent, int multiplier, Map<String, GraphNodeGui> nodes) {
         this.parent = parent;
         String location = "Sphero.png";
         img = parent.loadImage(location, "png");
@@ -32,10 +32,10 @@ public class Sphero {
         putTo(nodes.get("Barcelona"));
     }
 
-    public void moveTo(GraphNode node){
+    public void moveTo(GraphNodeGui node){
     }
 
-    public void putTo(GraphNode node){
+    public void putTo(GraphNodeGui node){
         location = new PVector(node.getXPos(), node.getYPos());
     }
 

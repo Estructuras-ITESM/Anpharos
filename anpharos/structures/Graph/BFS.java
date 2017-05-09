@@ -22,6 +22,7 @@ public class BFS {
     }
 
     public ArrayList<GraphNode> trace(String source) {
+        ArrayList<Edge> tmpEdges = new ArrayList<>();
         queue.enqueue(graph.getNodeRef(source));
         visited[graph.getNodePosition(source)] = true;
         while (!queue.isEmpty()) {
@@ -32,6 +33,29 @@ public class BFS {
                 if (!visited[graph.getNodePosition(e.to)]) {
                     queue.enqueue(e.to);
                     visited[graph.getNodePosition(e.to)] = true;
+                    tmpEdges.add(e);
+                }
+            }
+        }
+        return trace;
+    }
+
+    public static ArrayList<GraphNode> trace(WeightedDigraph graph, String source) {
+        ArrayList<Edge> tmpEdges = new ArrayList<>();
+        boolean[] visited = new boolean[graph.size];
+        ArrayList<GraphNode> trace = new ArrayList<>();
+        Queue<GraphNode> queue = new Queue<>();
+        queue.enqueue(graph.getNodeRef(source));
+        visited[graph.getNodePosition(source)] = true;
+        while (!queue.isEmpty()) {
+            GraphNode dequeued = queue.dequeue();
+            trace.add(dequeued);
+            System.out.println("Visited:" +dequeued);
+            for (Edge e : graph.adjList.get(dequeued)) {
+                if (!visited[graph.getNodePosition(e.to)]) {
+                    queue.enqueue(e.to);
+                    visited[graph.getNodePosition(e.to)] = true;
+                    tmpEdges.add(e);
                 }
             }
         }

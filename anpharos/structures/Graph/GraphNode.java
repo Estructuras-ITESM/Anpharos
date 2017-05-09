@@ -48,7 +48,7 @@ public class GraphNode {
 
 
     public static void main(String[] args) {
-        /*GraphNode tmp = new GraphNode("Barcelona");
+        /*GraphNodeGui tmp = new GraphNodeGui("Barcelona");
         tmp.addAdjNode( "Madrid", 10);
         tmp.addAdjNode( "Coruña", 20);
         tmp.addAdjNode( "Valencia", 30);
