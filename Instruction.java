@@ -1,4 +1,6 @@
-public class Instruction{
+import java.io.*;
+
+public class Instruction implements Serializable{
 
 	private int id;
 	private Command command;

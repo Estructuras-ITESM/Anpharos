@@ -3,7 +3,7 @@ import javax.imageio.*;
 import java.io.*;
 import java.lang.Math;
 
-public class Sphero{
+public class Sphero implements Serializable{
   private int angle;
   private double x, y;
   private Image image;

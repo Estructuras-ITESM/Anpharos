@@ -69,6 +69,7 @@ public class Login extends JFrame implements ActionListener, Serializable{
                 Usuario u = usuarios.get(hash);
                 if (u.getContrasena().equals(contra)) {
                 Anpharos a = new Anpharos(u,usuarios);
+                //serialize(usuarios);
                 dispose();
                 }else{
                     JOptionPane.showMessageDialog(null, "Contraseña incorrecta");
@@ -82,16 +83,27 @@ public class Login extends JFrame implements ActionListener, Serializable{
                 usuarios.put(hash,u);
                 Anpharos a = new Anpharos(u,usuarios);
                 JOptionPane.showMessageDialog(null, "Tu cuenta ha sido creada");
+                //serialize(usuarios);
                 dispose();
             }else{
                 JOptionPane.showMessageDialog(null, "Esa cuenta ya existe");
             }
         }
     }
+    /*
+    public void serialize(Hashtable<Integer,Usuario> usuarios){
+        try {
+            FileOutputStream fileOut =   new FileOutputStream("UsuarioBD.sph");
+            ObjectOutputStream out = new ObjectOutputStream(fileOut);
+            out.writeObject(usuarios);
+            out.close();
+            fileOut.close();
+        }catch(IOException i) {
+            i.printStackTrace();
+        }
+    }*/
 
     public static void main(String[] args) {
-        /*Hashtable<Integer,Usuario> hash = new Hashtable<Integer,Usuario>();
-        Login l = new Login(hash);*/
         try{
           FileInputStream fis = new FileInputStream("UsuarioBD.sph");
           ObjectInputStream ois = new ObjectInputStream(fis);

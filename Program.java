@@ -1,7 +1,7 @@
 import java.util.*;
 import java.io.*;
 
-public class Program{
+public class Program implements Serializable{
 
 	private Queue<Instruction> instructionQueue;
 	private LinkedList<Sphero> spheroList;
