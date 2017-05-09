@@ -21,8 +21,8 @@ public class GraphParent extends PApplet{
         dijkstra = cp5.addButton("Start Dijkstra").setPosition(width/4,20*multiplier).setSize(100*multiplier,20*multiplier );
         dfs = cp5.addButton("Start DFS").setPosition(2*width/4, 20*multiplier).setSize(100*multiplier,20*multiplier );
         bfs = cp5.addButton("Start BFS").setPosition(3*width/4,20*multiplier).setSize(100*multiplier,20*multiplier );
-        sphero = new Sphero(this, multiplier);
         spainGraph = new SpainGraph(this, multiplier);
+        sphero = new Sphero(this, multiplier, spainGraph.getNodes());
     }
 
     public void draw() {

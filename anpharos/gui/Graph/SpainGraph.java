@@ -28,6 +28,10 @@ public class SpainGraph {
         setEdges();
     }
 
+    public Map<String,GraphNode> getNodes(){
+        return nodes;
+    }
+
     public void setNodes() {
         nodes.put("Albacete", new GraphNode(parent, 352, 409, multiplier));//Albacete
         nodes.put("Badajoz", new GraphNode(parent, 160, 419, multiplier));//Badajoz
@@ -49,7 +53,6 @@ public class SpainGraph {
     }
 
     public void setEdges() {
-
         edges.add(new GraphEdge(parent, nodes.get("Albacete"), nodes.get("Madrid"), multiplier));
         edges.add(new GraphEdge(parent, nodes.get("Albacete"), nodes.get("Murcia"), multiplier));
         edges.add(new GraphEdge(parent, nodes.get("Albacete"), nodes.get("Valencia"), multiplier));
@@ -73,7 +76,6 @@ public class SpainGraph {
         edges.add(new GraphEdge(parent, nodes.get("Madrid"), nodes.get("Zaragoza"), multiplier));
         edges.add(new GraphEdge(parent, nodes.get("Murcia"), nodes.get("Valencia"), multiplier));
         edges.add(new GraphEdge(parent, nodes.get("Valladolid"), nodes.get("Vigo"), multiplier));
-
     }
 
     public void draw() {
