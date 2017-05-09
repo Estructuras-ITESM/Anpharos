@@ -10,6 +10,7 @@ public class Program{
 		instructionQueue = new Queue<Instruction>();
 		spheroList = new LinkedList<Sphero>();
 		spheroList.add(new Sphero(100, 100, ""));
+		spheroList.add(new Sphero(100, 100, ""));
 	}
 
 	public Queue<Instruction> getInstructionQueue(){
@@ -18,6 +19,10 @@ public class Program{
 
 	public LinkedList<Sphero> getSpheroList(){
 		return spheroList;
+	}
+
+	public void setInstructionQueue(Queue<Instruction> instructions){
+		instructionQueue = instructions;
 	}
 
 }

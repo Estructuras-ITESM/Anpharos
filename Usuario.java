@@ -35,12 +35,24 @@ public class Usuario implements Serializable{
     program.getInstructionQueue().enqueue(instruction);
   }
 
+  public Instruction dequeueInstruction(){
+    return program.getInstructionQueue().dequeue();
+  }
+
   public LinkedList<Sphero> getList(){
     return program.getSpheroList();
   }
 
   public void addSphero(){
     program.getSpheroList().add(new Sphero(100, 100, ""));
+  }
+
+  public Queue<Instruction> getInstructionQueue(){
+    return program.getInstructionQueue();
+  }
+
+  public void renewQueue(Queue<Instruction> instructions){
+    program.setInstructionQueue(instructions);
   }
 
 } 

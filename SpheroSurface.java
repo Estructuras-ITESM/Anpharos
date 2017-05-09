@@ -2,6 +2,8 @@ import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
 import java.lang.Math;
+import javax.imageio.ImageIO;
+import java.io.*;
 
 public class SpheroSurface extends JPanel{
   
@@ -9,6 +11,8 @@ public class SpheroSurface extends JPanel{
   int angle, distance;
   boolean show;
   public Timer tm = new Timer(5, new timerListener());
+  Image image;
+  Object lock = new Object();
 
   public SpheroSurface(){
     this(0, 0);
@@ -43,6 +47,12 @@ public class SpheroSurface extends JPanel{
 	super.paintComponent(g);
   	if(show){
 
+  		try{
+      		image = ImageIO.read(new File("img/sphero1.png"));
+    	} catch (IOException io){
+    	    io.printStackTrace();
+    	}
+
 	  	int ix = (int) x;
 	  	int iy = (int) y;
 
@@ -50,7 +60,7 @@ public class SpheroSurface extends JPanel{
 	  	int idy = (int) ydestin;
 
 	  	g.setColor(Color.RED);
-	  	g.fillOval(ix, iy, 40, 40);
+	  	boolean what = g.drawImage(image, ix, iy, null);
 	  	g.setColor(Color.BLUE);
 	  	g.fillOval(idx, idy, 40, 40);
   	}
@@ -76,41 +86,49 @@ public class SpheroSurface extends JPanel{
   }
 
   public void forward(int angle, int distance){
-  	this.angle = angle;
-  	this.distance = distance;
-  	v = vel;
-  	xdestin = x + (distance*Math.cos(Math.toRadians(angle)));
-  	ydestin = y + (distance*Math.sin(Math.toRadians(angle)));
-  	this.start();
+    synchronized(lock){
+    	this.angle = angle;
+    	this.distance = distance;
+    	v = vel;
+    	xdestin = x + (distance*Math.cos(Math.toRadians(angle)));
+    	ydestin = y + (distance*Math.sin(Math.toRadians(angle)));
+    	this.start();
+    }
   }
 
   public void backward(int angle, int distance){
-  	this.angle = angle;
-  	this.distance = distance;
-  	v = -vel;
-  	xdestin = x - (distance*Math.cos(Math.toRadians(angle)));
-  	ydestin = y - (distance*Math.sin(Math.toRadians(angle)));
-  	this.start();
+    synchronized(lock){
+    	this.angle = angle;
+    	this.distance = distance;
+    	v = -vel;
+    	xdestin = x - (distance*Math.cos(Math.toRadians(angle)));
+    	ydestin = y - (distance*Math.sin(Math.toRadians(angle)));
+    	this.start();
+    }
   }
 
   public void moveTo(double dx, double dy){
-  	double co = dy - y;
-  	double ca = dx - x;
-  	System.out.println(co);
-  	System.out.println(ca);
-  	angle = (int) Math.toDegrees(Math.atan(co/ca));
-  	System.out.println(angle);
-  	if(dx < x){
-  		angle = angle + 180;
-  	}
-  	v = vel;
-  	xdestin = dx;
-  	ydestin = dy;
-  	this.start();
+    synchronized(lock){
+    	double co = dy - y;
+    	double ca = dx - x;
+    	System.out.println(co);
+    	System.out.println(ca);
+    	angle = (int) Math.toDegrees(Math.atan(co/ca));
+    	System.out.println(angle);
+    	if(dx < x){
+    		angle = angle + 180;
+    	}
+    	v = vel;
+    	xdestin = dx;
+    	ydestin = dy;
+    	this.start();
+    }
   }
 
   public void hideSphero(){
-  	show = !show;
-  	repaint();
+    synchronized(lock){
+    	show = !show;
+    	repaint();
+    }
   }
 }
