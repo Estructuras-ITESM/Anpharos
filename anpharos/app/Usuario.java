@@ -5,6 +5,7 @@ import anpharos.sphero.Sphero;
 
 import java.io.Serializable;
 import java.util.*;
+import anpharos.structures.Queue;
 
 public class Usuario implements Serializable{
   private String nombre, contrasena;
@@ -40,6 +41,10 @@ public class Usuario implements Serializable{
     program.getInstructionQueue().enqueue(instruction);
   }
 
+  public Instruction dequeueInstruction(){
+    return program.getInstructionQueue().dequeue();
+  }
+
   public LinkedList<Sphero> getList(){
     return program.getSpheroList();
   }
@@ -54,6 +59,14 @@ public class Usuario implements Serializable{
 
   public void setProgram(Program program){
     this.program = program;
+  }
+
+    public Queue<Instruction> getInstructionQueue(){
+    return program.getInstructionQueue();
+  }
+
+  public void renewQueue(Queue<Instruction> instructions){
+    program.setInstructionQueue(instructions);
   }
 
 } 

@@ -13,6 +13,7 @@ import java.awt.event.*;
 import java.util.*;
 import java.io.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
+import anpharos.structures.Queue;
 
 public class Anpharos extends JFrame{
 
@@ -21,7 +22,7 @@ public class Anpharos extends JFrame{
   private GridBagConstraints c = new GridBagConstraints();
   private JTextArea code = new JTextArea(10,10);
   private Sphero sphero;
-  private anpharos.structures.Queue<Command> qCommands = new anpharos.structures.Queue<Command>();
+  private anpharos.structures.Queue<Command> qCommands = new Queue<Command>();
   private Usuario usuario;
   private JComboBox select;
   private String [] sph;
@@ -132,6 +133,7 @@ public class Anpharos extends JFrame{
     create = new JButton("Create");
     create.setActionCommand("Create");
     create.addActionListener(new QueueListener());
+    create.setEnabled(false);
     add(create,c);
 
     c.gridx = 1;
@@ -188,31 +190,36 @@ public class Anpharos extends JFrame{
 
   private class QueueListener implements ActionListener{
     public void actionPerformed(ActionEvent e){
+      currentSphero = select.getSelectedIndex();
+      sphero = usuario.getSphero(currentSphero);
       String command = e.getActionCommand();
       switch(command){
         case "Forward":
           int f = Integer.parseInt(JOptionPane.showInputDialog("Distancia a avanzar:"));
           usuario.enqueueInstruction(new Instruction(currentSphero, Command.FORWARD, f));
           code.append("S"+(currentSphero+1)+" <- Forward("+f+"); \n");
-          if(!drawing.get(currentSphero).tm.isRunning()){
-            drawing.get(currentSphero).forward(sphero.getAngle(), f);
-            sphero.forward(100);
+/*          if(!drawing.get(currentSphero).tm.isRunning()){
+//            drawing.get(currentSphero).forward(sphero.getAngle(), f);
+//            sphero.forward(100);
           }
-          break;
+          usuario.getSphero(currentSphero).forward(f);
+*/          break;
         case "Backward":
           int b = Integer.parseInt(JOptionPane.showInputDialog("Distancia a retroceder: "));
           usuario.enqueueInstruction(new Instruction(currentSphero, Command.BACKWARD, b));
           code.append("S"+(currentSphero+1)+" <- Backward("+b+"); \n");
-          if(!drawing.get(currentSphero).tm.isRunning()){
+/*          if(!drawing.get(currentSphero).tm.isRunning()){
             drawing.get(currentSphero).backward(sphero.getAngle(), b);
-            sphero.backward(100);
+//            sphero.backward(100);
           }
-          break;
+          usuario.getSphero(currentSphero).backward(b);
+*/          break;
         case "Rotate":
           int r = Integer.parseInt(JOptionPane.showInputDialog("Grados a rotar:"));
           usuario.enqueueInstruction(new Instruction(currentSphero, Command.ROTATE, r));
           code.append("S"+(currentSphero+1)+" <- Rotate("+r+"); \n");
 //          sphero.rotate(r);
+          usuario.getSphero(currentSphero).rotate(r);
           break;
         case "MoveTo":
           int x = Integer.parseInt(JOptionPane.showInputDialog("Coordenada X a moverse"));
@@ -223,6 +230,7 @@ public class Anpharos extends JFrame{
             drawing.get(currentSphero).moveTo(x, y);
 //            sphero.moveTo(200,200);
           }
+          usuario.getSphero(currentSphero).moveTo(x,y);
           break;
         case "Draw":
           usuario.enqueueInstruction(new Instruction(currentSphero, Command.DRAW));
@@ -248,17 +256,46 @@ public class Anpharos extends JFrame{
           tmp.init();
           break;
         case "Create":
+          System.out.println("entro create");
           if(usuario.getList().size() < 5){
+            System.out.println("size < 5");
             usuario.addSphero();
             SpheroSurface ss = new SpheroSurface(cenx, ceny, 0, true);
+            System.out.println("image error");
             ss.setPreferredSize(new Dimension(750,750));
             add(ss,c);
+            setVisible(true);
             drawing.add(ss);
           } else {
             JOptionPane.showMessageDialog(null, "No se puede tener mas de 5 spheros.");
           }
           break;
         case "Run":
+          Queue<Instruction> tempQueue = new Queue<Instruction>();
+          Instruction ins = new Instruction(0, Command.FORWARD);
+          while(!usuario.getInstructionQueue().isEmpty()){
+            System.out.println("queue not empty");
+            ins = usuario.dequeueInstruction();
+            String com = ins.toString();
+            System.out.println(com);
+            switch(com){
+              case "FORWARD":
+                if(!drawing.get(ins.getId()).tm.isRunning()){
+                  drawing.get(ins.getId()).forward(sphero.getAngle(), ins.getInput1());
+                  usuario.getSphero(currentSphero).forward(ins.getInput1());
+                }
+                break;
+              case "BACKWARD":
+                if(!drawing.get(ins.getId()).tm.isRunning()){
+                  drawing.get(ins.getId()).backward(sphero.getAngle(), ins.getInput1());
+                  usuario.getSphero(currentSphero).backward(ins.getInput1());
+                }
+                
+                break;
+            }
+            tempQueue.enqueue(ins);
+          }
+          usuario.renewQueue(tempQueue);
           break;
         case "Save":
           int s = chooser.showSaveDialog(null);

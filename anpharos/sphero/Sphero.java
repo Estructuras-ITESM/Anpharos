@@ -17,7 +17,7 @@ public class Sphero implements Serializable{
     this.angle = 0;
     show = true;
     try{
-      image = ImageIO.read(new File(spheroImage));
+      image = ImageIO.read(new File("img/sphero1.png"));
     } catch (IOException io){
       io.printStackTrace();
     }
@@ -80,5 +80,21 @@ public class Sphero implements Serializable{
 
   public boolean isShown(){
     return show;
+  }
+
+  public void setAngle(int angle){
+    this.angle = angle;
+  }
+
+  public void setX(int x){
+    this.x = x;
+  }
+
+  public void setY(int y){
+    this.y = y;
+  }
+
+  public void setShow(boolean show){
+    this.show = show;
   }
 }

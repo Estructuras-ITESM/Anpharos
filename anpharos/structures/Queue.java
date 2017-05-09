@@ -16,4 +16,12 @@ public class Queue<T> extends LinkedList<T>{
 		return this.removeFirst();
 	}
 
+	public boolean isEmpty(){
+		if(size()>0){
+			return false;
+		} else {
+			return true;
+		}
+	}
+
 }
