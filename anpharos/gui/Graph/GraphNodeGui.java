@@ -6,18 +6,18 @@ import processing.core.PApplet;
  * Created on 5/8/17.
  */
 
-public class GraphNode {
+public class GraphNodeGui {
     int xPos, yPos;
     PApplet parent;
     final int SIZE = 20;
     int multiplier;
 
-    public GraphNode(PApplet parent, int multiplier) {
+    public GraphNodeGui(PApplet parent, int multiplier) {
         this.parent = parent;
         this.multiplier = multiplier;
     }
 
-    public GraphNode(PApplet parent, int xPos, int yPos, int multiplier) {
+    public GraphNodeGui(PApplet parent, int xPos, int yPos, int multiplier) {
         this(parent, multiplier);
         this.xPos = xPos;
         this.yPos = yPos;

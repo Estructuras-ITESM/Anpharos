@@ -16,7 +16,7 @@ public class Dijkstra {
     GraphNode source;
     Map<GraphNode, Edge> edgesMap;
 
-    Dijkstra(WeightedDigraph graph) {
+    public Dijkstra(WeightedDigraph graph) {
         this.graph = graph;
         pq = new PriorityQueue<>();
         dist = new int[graph.size];
@@ -32,27 +32,42 @@ public class Dijkstra {
         dist[graph.getNodePosition(node)] = 0;
     }
 
-    private void calcDistances() {
+    private Map<GraphNode, Edge> calcDistances() {
         while (!pq.isEmpty()) {
-        GraphNode u = pq.poll().getNode();
-        int uPos = graph.getNodePosition(u);
-        for (Edge e : graph.adjList.get(u)) {
-            int vPos = graph.getNodePosition(e.to);
-            if (dist[vPos] > dist[uPos] + e.weight) {
-                dist[vPos] = dist[uPos] + e.weight;
-                pq.add(new GraphNodePriority(e.to, dist[uPos] + e.weight));
-                edgesMap.put(e.to, e);
+            GraphNode u = pq.poll().getNode();
+            int uPos = graph.getNodePosition(u);
+            for (Edge e : graph.adjList.get(u)) {
+                int vPos = graph.getNodePosition(e.to);
+                if (dist[vPos] > dist[uPos] + e.weight) {
+                    dist[vPos] = dist[uPos] + e.weight;
+                    pq.add(new GraphNodePriority(e.to, dist[uPos] + e.weight));
+                    edgesMap.put(e.to, e);
+                }
             }
         }
-        }
+        return edgesMap;
     }
 
-    public int[] getDistances(){
+    public ArrayList<GraphNode> trace(String dest) {
+        this.calcDistances();
+        GraphNode destNode = graph.getNodeRef(dest);
+        ArrayList<GraphNode> tmp = new ArrayList<>();
+        Edge edge = edgesMap.get(destNode);
+        tmp.add(edge.to);
+        while(edge.from != source) {
+            tmp.add(0, edge.from);
+            edge = edgesMap.get(edge.from);
+        }
+        tmp.add(0, source);
+        return tmp;
+    }
+
+    public int[] getDistances() {
         this.calcDistances();
         return dist;
     }
 
-    public Map<GraphNode, Edge> distTree(){
+    public Map<GraphNode, Edge> distTree() {
         this.calcDistances();
         return edgesMap;
     }
@@ -87,6 +102,7 @@ public class Dijkstra {
         Dijkstra dij = new Dijkstra(tmp);
         dij.setSource("0");
         int[] tmpDist = dij.getDistances();
+        dij.trace("8");
         System.out.println(tmpDist);
     }
 }
