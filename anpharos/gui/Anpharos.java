@@ -1,15 +1,18 @@
 package anpharos.gui;
 
 import anpharos.app.Usuario;
+import anpharos.app.Program;
 import anpharos.sphero.Command;
 import anpharos.sphero.Instruction;
 import anpharos.sphero.Sphero;
+import anpharos.gui.Graph.GraphParent;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.util.*;
 import java.io.*;
+import javax.swing.filechooser.FileNameExtensionFilter;
 
 public class Anpharos extends JFrame{
 
@@ -26,6 +29,9 @@ public class Anpharos extends JFrame{
   private int cenx = 100;
   private int ceny = 100;
   private Hashtable<Integer,Usuario> usuarios;
+  private JFileChooser chooser = new JFileChooser();
+  private FileNameExtensionFilter filter = new FileNameExtensionFilter(
+        "Programs", "prg");
 
   public Anpharos(Usuario usuario, Hashtable<Integer,Usuario> usuarios){
     this.usuario = usuario;
@@ -45,6 +51,7 @@ public class Anpharos extends JFrame{
     });
     sph = new String[usuario.getList().size()];
     fillArray();
+    chooser.setFileFilter(filter);
     initComponents();
     setVisible(true);
   }
@@ -155,21 +162,25 @@ public class Anpharos extends JFrame{
     c.gridy = 7;
     run = new JButton("Run");
     run.setActionCommand("Run");
+    run.addActionListener(new QueueListener());
     add(run,c);
 
     c.gridx = 8;
     clear = new JButton("Clear");
     clear.setActionCommand("Clear");
+    clear.addActionListener(new QueueListener());
     add(clear,c);
 
     c.gridx = 9;
     JPanel p = new JPanel(new GridBagLayout());
     save = new JButton("Save");
     save.setActionCommand("Save");
+    save.addActionListener(new QueueListener());
     p.add(save,g);
     g.gridy = 0;
     load = new JButton("Load");
     load.setActionCommand("Load");
+    load.addActionListener(new QueueListener());
     p.add(load,g);
     add(p,c);
 
@@ -232,6 +243,10 @@ public class Anpharos extends JFrame{
           usuario.enqueueInstruction(new Instruction(currentSphero, Command.RESETSPHERO));
           code.append("S"+(currentSphero+1)+" <- ResetSphero(); \n");
           break;
+        case "Graph":
+          GraphParent tmp = new GraphParent();
+          tmp.init();
+          break;
         case "Create":
           if(usuario.getList().size() < 5){
             usuario.addSphero();
@@ -246,8 +261,13 @@ public class Anpharos extends JFrame{
         case "Run":
           break;
         case "Save":
+          int ans = chooser.showSaveDialog(null);
+          if (ans == JFileChooser.APPROVE_OPTION) {
+            String doc = chooser.getSelectedFile().getName();
+          }
           break;
         case "Load":
+          chooser.showOpenDialog(null);
           break;
       }
     }
@@ -332,10 +352,20 @@ public class Anpharos extends JFrame{
           out.writeObject(usuarios);
           out.close();
           fileOut.close();
-          System.out.println("PUTA MADRE");
       }catch(IOException i) {
           i.printStackTrace();
-          System.out.println("SEAS MAMON");
+      }
+  }
+
+  public void serialize(Program p, String file){
+      try {
+          FileOutputStream fileOut =   new FileOutputStream(file+".prg");
+          ObjectOutputStream out = new ObjectOutputStream(fileOut);
+          out.writeObject(p);
+          out.close();
+          fileOut.close();
+      }catch(IOException i) {
+          i.printStackTrace();
       }
   }
 
