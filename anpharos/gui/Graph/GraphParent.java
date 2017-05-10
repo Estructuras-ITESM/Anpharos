@@ -18,7 +18,7 @@ public class GraphParent extends PApplet {
     Textfield input, destination;
     Sphero sphero;
     SpainGraph spainGraph;
-    int multiplier = 2;
+    int multiplier = 1;
     ArrayList<GraphNode> trace;
     String city,destCity;
 
